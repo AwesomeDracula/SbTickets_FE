@@ -1,4 +1,6 @@
 import React from "react";
+import instance from "../services";
+import * as AppURL from "../services/urlAPI";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -6,9 +8,11 @@ var UserDispatchContext = React.createContext();
 function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      return { ...state, isAuthenticated: true };
+      return { ...state, isAuthenticated: true, loginFailure: null };
+    case "LOGIN_FAILURE":
+      return { ...state, isAuthenticated: false, loginFailure: action.message };
     case "SIGN_OUT_SUCCESS":
-      return { ...state, isAuthenticated: false };
+      return { ...state, isAuthenticated: false, loginFalure: null };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -18,6 +22,7 @@ function userReducer(state, action) {
 function UserProvider({ children }) {
   var [state, dispatch] = React.useReducer(userReducer, {
     isAuthenticated: !!localStorage.getItem("id_token"),
+    loginFailure: null
   });
 
   return (
@@ -49,22 +54,35 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, login, password, history, setIsLoading, setError) {
-  setError(false);
+async function loginUser(dispatch, login, password, history, setIsLoading, notify) {
   setIsLoading(true);
 
   if (!!login && !!password) {
-    setTimeout(() => {
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-
-      history.push('/app/dashboard')
-    }, 2000);
+    await instance.post(AppURL.login, { username: login, password })
+      .then(res => {
+        const status = res?.status;
+        if (status === 200) {
+          const authToken = res?.token;
+          localStorage.setItem('id_token', authToken);
+          setIsLoading(false)
+          dispatch({ type: 'LOGIN_SUCCESS' })
+          history.push('/app/dashboard')
+        } else if (status === 400) {
+          console.log(res)
+          const msg = res?.message || 'Username and/or password wrong';
+          dispatch({ type: "LOGIN_FAILURE", message: msg });
+          notify(msg);
+          setIsLoading(true);
+        }
+      })
+      .catch(error => {
+        dispatch({ type: "LOGIN_FAILURE" });
+        // showError('Something wrong')
+        setIsLoading(false);
+      })
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
-    setError(true);
+    // showError('Something wrong')
     setIsLoading(false);
   }
 }

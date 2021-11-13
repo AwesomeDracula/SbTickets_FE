@@ -17,4 +17,7 @@ export default makeStyles(theme => ({
       boxShadow: theme.customShadows.widgetWide,
     },
   },
+  buttonBack: {
+    marginRight: '20px'
+  }
 }));

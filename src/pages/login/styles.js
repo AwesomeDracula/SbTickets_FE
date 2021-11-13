@@ -145,4 +145,17 @@ export default makeStyles(theme => ({
       bottom: theme.spacing(2),
     },
   },
+  progress: {
+    visibility: "hidden",
+  },
+  notification: {
+    display: "flex",
+    alignItems: "center",
+    background: "transparent",
+    boxShadow: "none",
+    overflow: "visible",
+  },
+  notificationComponent: {
+    paddingRight: theme.spacing(4),
+  },
 }));

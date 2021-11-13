@@ -7,6 +7,10 @@ function layoutReducer(state, action) {
   switch (action.type) {
     case "TOGGLE_SIDEBAR":
       return { ...state, isSidebarOpened: !state.isSidebarOpened };
+    case "TOAST_SUCCESS":
+      return { ...state, showToastSuccess: true, message: action.message };
+    case "TOAST_FAIL":
+      return { ...state, showToastFail: true, message: action.message }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -16,6 +20,9 @@ function layoutReducer(state, action) {
 function LayoutProvider({ children }) {
   var [state, dispatch] = React.useReducer(layoutReducer, {
     isSidebarOpened: true,
+    showToastSuccess: false,
+    showToastFail: false,
+    message: null
   });
   return (
     <LayoutStateContext.Provider value={state}>
@@ -42,11 +49,25 @@ function useLayoutDispatch() {
   return context;
 }
 
-export { LayoutProvider, useLayoutState, useLayoutDispatch, toggleSidebar };
+export { LayoutProvider, useLayoutState, useLayoutDispatch, toggleSidebar, showToast };
 
 // ###########################################################
 function toggleSidebar(dispatch) {
   dispatch({
     type: "TOGGLE_SIDEBAR",
   });
+}
+
+function showToast(dispatch, type, message) {
+  if (type === 'error')
+    dispatch({
+      type: "TOAST_FAIL",
+      message
+    });
+  else if (type === 'success') {
+    dispatch({
+      type: 'TOAST_SUCCESS',
+      message
+    })
+  }
 }

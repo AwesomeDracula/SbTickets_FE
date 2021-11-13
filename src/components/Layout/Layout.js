@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Route,
   Switch,
@@ -6,8 +6,9 @@ import {
   withRouter,
 } from "react-router-dom";
 import classnames from "classnames";
-import {Box, IconButton, Link} from '@material-ui/core'
-import Icon from '@mdi/react'
+import { Box, IconButton, Link } from '@material-ui/core';
+import Icon from '@mdi/react';
+import { ToastContainer, toast } from "react-toastify";
 
 //icons
 import {
@@ -31,9 +32,12 @@ import Maps from "../../pages/maps";
 import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
+import Drivers from "../../pages/Drivers";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+import DriverDetail from "../../pages/Drivers/DriverDetail";
+import NewDriver from "../../pages/Drivers/NewDriver";
 
 function Layout(props) {
   var classes = useStyles();
@@ -41,108 +45,108 @@ function Layout(props) {
   // global
   var layoutState = useLayoutState();
 
+  const notifyError = (message) => toast.error(message);
+
+  const notifySuccess = (message) => toast.success(message);
+
+  useEffect(() => {
+    if (layoutState.showToastSuccess) {
+      notifySuccess(layoutState.message);
+    }
+  }, [layoutState.showToastSuccess]);
+
+  useEffect(() => {
+    if (layoutState.showToastFail) {
+      notifyError(layoutState.message);
+    }
+  }, [layoutState.showToastFail]);
+
   return (
     <div className={classes.root}>
-        <>
-          <Header history={props.history} />
-          <Sidebar />
-          <div
-            className={classnames(classes.content, {
-              [classes.contentShift]: layoutState.isSidebarOpened,
-            })}
+      <>
+        <ToastContainer />
+        <Header history={props.history} />
+        <Sidebar />
+        <div
+          className={classnames(classes.content, {
+            [classes.contentShift]: layoutState.isSidebarOpened,
+          })}
+        >
+          <div className={classes.fakeToolbar} />
+          <Switch>
+            <Route path="/app/dashboard" component={Dashboard} />
+            <Route path="/app/typography" component={Typography} />
+            <Route path="/app/tables" component={Tables} />
+            <Route path="/app/notifications" component={Notifications} />
+            <Route
+              exact
+              path="/app/ui"
+              render={() => <Redirect to="/app/ui/icons" />}
+            />
+            <Route exact path="/app/drivers" component={Drivers} />
+            <Route exact path="/app/drivers/create" component={NewDriver} />
+            <Route exact path="/app/drivers/:id" component={DriverDetail} />
+            <Route path="/app/ui/maps" component={Maps} />
+            <Route path="/app/ui/icons" component={Icons} />
+            <Route path="/app/ui/charts" component={Charts} />
+          </Switch>
+          <Box
+            mt={5}
+            width={"100%"}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent="space-between"
           >
-            <div className={classes.fakeToolbar} />
-            <Switch>
-              <Route path="/app/dashboard" component={Dashboard} />
-              <Route path="/app/typography" component={Typography} />
-              <Route path="/app/tables" component={Tables} />
-              <Route path="/app/notifications" component={Notifications} />
-              <Route
-                exact
-                path="/app/ui"
-                render={() => <Redirect to="/app/ui/icons" />}
-              />
-              <Route path="/app/ui/maps" component={Maps} />
-              <Route path="/app/ui/icons" component={Icons} />
-              <Route path="/app/ui/charts" component={Charts} />
-            </Switch>
-            <Box
-              mt={5}
-              width={"100%"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent="space-between"
-            >
-              <div>
-                <Link
-                  color={'primary'}
-                  href={'https://flatlogic.com/'}
-                  target={'_blank'}
-                  className={classes.link}
+            <div>
+              <Link
+                color={'primary'}
+                href={'https://github.com/AwesomeDracula/SbTickets_BE'}
+                target={'_blank'}
+                className={classes.link}
+              >
+                Project Backend
+              </Link>
+              <Link
+                color={'primary'}
+                href={'https://github.com/AwesomeDracula/SbTickets_FE'}
+                target={'_blank'}
+                className={classes.link}
+              >
+                Project Frontend
+              </Link>
+            </div>
+            <div>
+              <Link
+                href={'https://www.facebook.com/groups/371157724565461'}
+                target={'_blank'}
+              >
+                <IconButton aria-label="facebook">
+                  <Icon
+                    path={FacebookIcon}
+                    size={1}
+                    color="#6E6E6E99"
+                  />
+                </IconButton>
+              </Link>
+              <Link
+                href={'https://github.com/AwesomeDracula/'}
+                target={'_blank'}
+              >
+                <IconButton
+                  aria-label="github"
+                  style={{ marginRight: -12 }}
                 >
-                  Flatlogic
-                </Link>
-                <Link
-                  color={'primary'}
-                  href={'https://flatlogic.com/about'}
-                  target={'_blank'}
-                  className={classes.link}
-                >
-                  About Us
-                </Link>
-                <Link
-                  color={'primary'}
-                  href={'https://flatlogic.com/blog'}
-                  target={'_blank'}
-                  className={classes.link}
-                >
-                  Blog
-                </Link>
-              </div>
-              <div>
-                <Link
-                  href={'https://www.facebook.com/flatlogic'}
-                  target={'_blank'}
-                >
-                  <IconButton aria-label="facebook">
-                    <Icon
-                      path={FacebookIcon}
-                      size={1}
-                      color="#6E6E6E99"
-                    />
-                  </IconButton>
-                </Link>
-                <Link
-                  href={'https://twitter.com/flatlogic'}
-                  target={'_blank'}
-                >
-                  <IconButton aria-label="twitter">
-                    <Icon
-                      path={TwitterIcon}
-                      size={1}
-                      color="#6E6E6E99"
-                    />
-                  </IconButton>
-                </Link>
-                <Link
-                  href={'https://github.com/flatlogic'}
-                  target={'_blank'}
-                >
-                  <IconButton
-                    aria-label="github"
-                    style={{marginRight: -12}}
-                  >
-                    <Icon
-                      path={GithubIcon}
-                      size={1}
-                      color="#6E6E6E99"
-                    />
-                  </IconButton>
-                </Link>
-              </div>
-            </Box>
-          </div>
-        </>
+                  <Icon
+                    path={GithubIcon}
+                    size={1}
+                    color="#6E6E6E99"
+                  />
+                </IconButton>
+              </Link>
+            </div>
+          </Box>
+        </div>
+      </>
     </div>
   );
 }
