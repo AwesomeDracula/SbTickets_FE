@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Grid, TextField, CircularProgress, Button as MUIButton } from "@material-ui/core";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import { Typography, Button } from "../../components/Wrappers/Wrappers";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import instance from '../../services';
+import { useParams } from 'react-router-dom';
 import * as AppURL from '../../services/urlAPI';
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,34 +18,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = {
-  nationalId: "",
-  name: "",
-  codeLicense: "",
-  typeLicense: "",
-  address: "",
-  dob: "2000-01-01",
-  seniority: 0,
-  image: "body?.image",
-};
-
-function NewDriver() {
+function BusDetail() {
   let history = useHistory();
   const classes = useStyles();
-  const [formValues, setFormValues] = useState(data);
+  const { id } = useParams();
+  const [formValues, setFormValues] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleSaveButton = () => {
-    instance.post(AppURL.createDriver, {
-      ...formValues,
-      seniority: parseInt(formValues.seniority),
-    })
+  useEffect(() => {
+    let url = AppURL.getBus + '/' + id;
+    instance.get(url)
       .then(res => {
+        console.log(res);
+        if (res?.status === 200) {
+          const body = res?.body;
+          let data = {
+            id: body?.id,
+            carNumber: body?.carNumber,
+            color: body?.color,
+            manufacturer: body?.manufacturer,
+            numberSeats: body?.numberSeats,
+            lifeCar: body?.lifeCar,
+            yearUse: body?.yearUse,
+            dateMantain: body?.dateMantain,
+          };
+          setFormValues(data);
+        }
+
+      })
+  }, []);
+
+  const handleEditButton = () => {
+    if (isEditing) {
+      let url = AppURL.updateBus + '/' + id;
+      instance.put(url, {
+        ...formValues,
+        dateMantain: '2000-01-01'
+      }).then(res => {
         toast.success(res?.msg);
         history.goBack();
-      })
-      .catch(error => {
+      }).catch(error => {
         toast.error(error?.msg);
       })
+    }
+    setIsEditing(!isEditing);
   }
 
   const handleInputChange = (e) => {
@@ -72,9 +90,9 @@ function NewDriver() {
               variant="contained"
               size="medium"
               color="primary"
-              onClick={handleSaveButton}
+              onClick={handleEditButton}
             >
-              Save
+              {isEditing ? 'Save' : 'Edit'}
             </MUIButton>} />
           <Grid container spacing={4}>
             <Grid item xs={12}>
@@ -82,65 +100,70 @@ function NewDriver() {
                 <Grid container item xs={12}>
                   <Grid item xs={6}>
                     <TextField
-                      id="nationalId"
-                      name="nationalId"
-                      label="National ID"
+                      id="id"
+                      name="id"
+                      label="ID"
                       type="text"
                       className={classes.input}
-                      value={formValues?.nationalId}
+                      value={formValues?.ID}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
+                      disabled={!isEditing}
                     />
                     <TextField
-                      id="name"
-                      name="name"
-                      label="Name"
+                      id="carNumber"
+                      name="carNumber"
+                      label="CarNumber"
                       type="text"
                       className={classes.input}
-                      value={formValues?.name}
+                      value={formValues?.carNumber}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
+                      disabled={!isEditing}
                     />
                     <TextField
-                      id="codeLicense"
-                      name="codeLicense"
-                      label="Code License"
+                      id="color"
+                      name="color"
+                      label="color"
                       type="text"
                       className={classes.input}
-                      value={formValues?.codeLicense}
+                      value={formValues?.color}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
+                      disabled={!isEditing}
                     />
                     <TextField
-                      id="typeLicense"
-                      name="typeLicense"
-                      label="Type License"
+                      id="manufacturer"
+                      name="manufacturer"
+                      label="Manufacturer"
                       type="text"
                       className={classes.input}
-                      value={formValues.typeLicense}
+                      value={formValues.manufacturer}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
+                      disabled={!isEditing}
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
-                      id="address"
-                      name="address"
-                      label="Address"
+                      id="lifeCar"
+                      name="lifeCar"
+                      label="LifeCar"
                       type="text"
                       className={classes.input}
-                      value={formValues?.address}
+                      value={formValues?.lifeCar}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
+                      disabled={!isEditing}
                     />
                     <TextField
                       id="dob"
-                      label="Date of Birth"
+                      label="DateMantain"
                       type="date"
                       value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
                       sx={{ width: 220 }}
@@ -150,16 +173,31 @@ function NewDriver() {
                       name="dob"
                       className={classes.input}
                       variant="outlined"
+                      disabled={!isEditing}
                     />
                     <TextField
-                      id="seniority"
-                      name="seniority"
-                      label="Seniority"
-                      type="number"
+                      id="numberSeats"
+                      name="numberSeats"
+                      label="NumberSeats"
+                      type="text"
                       className={classes.input}
-                      value={formValues?.seniority}
+                      value={formValues?.numberSeats}
                       onChange={handleInputChange}
+                      type="variant"
                       variant="outlined"
+                      disabled={!isEditing}
+                    />
+                    <TextField
+                      id="yearUse"
+                      name="yearUse"
+                      label="YearUse"
+                      type="text"
+                      className={classes.input}
+                      value={formValues?.yearUse}
+                      onChange={handleInputChange}
+                      type="variant"
+                      variant="outlined"
+                      disabled={!isEditing}
                     />
                   </Grid>
                 </Grid>
@@ -173,4 +211,4 @@ function NewDriver() {
   )
 }
 
-export default NewDriver
+export default BusDetail

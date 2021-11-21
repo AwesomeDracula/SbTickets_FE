@@ -27,7 +27,7 @@ const data = {
   image: "body?.image",
 };
 
-function NewDriver() {
+function NewBus() {
   let history = useHistory();
   const classes = useStyles();
   const [formValues, setFormValues] = useState(data);
@@ -173,4 +173,4 @@ function NewDriver() {
   )
 }
 
-export default NewDriver
+export default NewBus

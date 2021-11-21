@@ -8,19 +8,19 @@ import { toast } from "react-toastify";
 import PageTitle from "../../components/PageTitle";
 import instance from "../../services";
 
-export default function Tables() {
+export default function Bus() {
   let history = useHistory();
   const [datatableData, setData] = useState(null);
   const [rowsSelectedByUser, setRowsSelected] = useState([]);
   useEffect(() => {
-    instance.get(AppURL.getAllDrivers)
+    instance.get(AppURL.getAllBus)
       .then(res => {
         console.log(JSON.stringify(res));
         const body = res?.body;
-        const data = body.map(driver => {
-          let driverData = [];
-          driverData.push(driver?.id, driver?.nationalId, driver?.name, driver?.typeLicense, driver?.seniority);
-          return driverData;
+        const data = body.map(bus => {
+          let busData = [];
+          busData.push(bus?.id, bus?.carNumber, bus?.color, bus?.manufacturer, bus?.lifeCar,  bus?.numberSeats, bus?.yearUse, bus?.dateMantain);
+          return busData;
         })
         setData(data);
       })
@@ -31,7 +31,7 @@ export default function Tables() {
 
   const handleRowClick = (rowData, rowMeta) => {
     console.log('hello', rowData, rowMeta);
-    history.push(`/app/drivers/${rowData[0]}`);
+    history.push(`/app/bus/${rowData[0]}`);
   }
 
   const handleRowDelete = () => {
@@ -40,7 +40,7 @@ export default function Tables() {
       if (rowsSelectedByUser.includes(idx))
         rowsToDelete.push(data[0]);
     })
-    instance.post(AppURL.deleteDrivers, rowsToDelete)
+    instance.post(AppURL.deleteBus, rowsToDelete)
       .then(res => {
         toast.success(res?.msg);
       }).catch(error => {
@@ -60,7 +60,7 @@ export default function Tables() {
           variant="contained"
           size="medium"
           color="primary"
-          onClick={() => { history.push(`/app/drivers/create`) }}
+          onClick={() => { history.push(`/app/bus/create`) }}
         >
           New
         </MUIButton>} />
@@ -68,9 +68,9 @@ export default function Tables() {
         <Grid item xs={12}>
           {
             datatableData ? <MUIDataTable
-              title="Driver List"
+              title="Bus List"
               data={datatableData}
-              columns={["Id", "National Id", "Name", "License", "Seniority"]}
+              columns={["Id", "CarNumber", "Color", "Manufacturer", "LifeCar","NumberSeats", "YearUse", "DateMantain"]}
               options={{
                 filterType: "checkbox",
                 draggableColumns: true,

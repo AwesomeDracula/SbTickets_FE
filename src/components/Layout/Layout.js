@@ -38,6 +38,9 @@ import Drivers from "../../pages/Drivers";
 import { useLayoutState } from "../../context/LayoutContext";
 import DriverDetail from "../../pages/Drivers/DriverDetail";
 import NewDriver from "../../pages/Drivers/NewDriver";
+import Bus from "../../pages/Bus";
+import BusDetail from "../../pages/Bus/BusDetail";
+import NewBus from "../../pages/Bus/NewBus";
 
 function Layout(props) {
   var classes = useStyles();
@@ -86,6 +89,9 @@ function Layout(props) {
             <Route exact path="/app/drivers" component={Drivers} />
             <Route exact path="/app/drivers/create" component={NewDriver} />
             <Route exact path="/app/drivers/:id" component={DriverDetail} />
+            <Route exact path="/app/bus" component={Bus} />
+            <Route exact path="/app/bus/create" component={NewBus} />
+            <Route exact path="/app/bus/:id" component={BusDetail} />
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />
