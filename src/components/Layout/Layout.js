@@ -33,11 +33,14 @@ import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
 import Drivers from "../../pages/Drivers";
-
+import LineBuses from "../../pages/LineBuses";
 // context
 import { useLayoutState } from "../../context/LayoutContext";
 import DriverDetail from "../../pages/Drivers/DriverDetail";
 import NewDriver from "../../pages/Drivers/NewDriver";
+
+import LineBusDetail from "../../pages/LineBuses/LineBusDetail";
+import NewLineBus from "../../pages/LineBuses/NewLineBus";
 
 function Layout(props) {
   var classes = useStyles();
@@ -86,9 +89,13 @@ function Layout(props) {
             <Route exact path="/app/drivers" component={Drivers} />
             <Route exact path="/app/drivers/create" component={NewDriver} />
             <Route exact path="/app/drivers/:id" component={DriverDetail} />
+            <Route exact path="/app/lineBuses" component={LineBuses} />
+            <Route exact path="/app/lineBuses/create" component={NewLineBus} />
+            <Route exact path="/app/lineBuses/:id" component={LineBusDetail} />
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />
+          
           </Switch>
           <Box
             mt={5}

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function DriverDetail() {
+function LineBusDetail() {
   let history = useHistory();
   const classes = useStyles();
   const { id } = useParams();
@@ -26,21 +26,18 @@ function DriverDetail() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    let url = AppURL.getDriver + '/' + id;
+    let url = AppURL.getLineBus + '/' + id;
     instance.get(url)
       .then(res => {
         if (res?.status === 200) {
           const body = res?.body;
           let data = {
-            nationalId: body?.nationalId,
-            name: body?.name,
-            codeLicense: body?.codeLicense,
-            typeLicense: body?.typeLicense,
-            address: body?.address,
-            dob: body?.dob,
-            seniority: body?.seniority,
-            image: body?.image,
+            firstPoint: body?.firstPoint,
+            lastPoint: body?.lastPoint,
+            length: body?.length,
+            complexity: body?.complexity,
           };
+
           setFormValues(data);
         }
 
@@ -49,12 +46,11 @@ function DriverDetail() {
 
   const handleEditButton = () => {
     if (isEditing) {
-      let url = AppURL.updateDriver + '/' + id;
+      let url = AppURL.updateLineBus + '/' + id;
       instance.put(url, {
         ...formValues,
-        seniority: parseInt(formValues.seniority),
-        salaryId: 1,
-        dob: '2000-01-01'
+        length: parseInt(formValues.length),
+        complexity: parseInt(formValues.complexity)
       })
       .then(res => {
         toast.success(res?.msg);
@@ -63,7 +59,7 @@ function DriverDetail() {
         toast.error(error?.msg);
       })
     }
-    setIsEditing(!isEditing);
+     setIsEditing(!isEditing);
   }
 
   const handleInputChange = (e) => {
@@ -79,7 +75,7 @@ function DriverDetail() {
       {
         formValues ? <>
           <PageTitle
-            title="Driver Details"
+            title="Line Bus Details"
             buttonBack={<MUIButton
               variant="contained"
               size="medium"
@@ -102,88 +98,48 @@ function DriverDetail() {
                 <Grid container item xs={12}>
                   <Grid item xs={6}>
                     <TextField
-                      id="nationalId"
-                      name="nationalId"
-                      label="National ID"
+                      id="firstPoint"
+                      name="firstPoint"
+                      label="First Point"
                       type="text"
                       className={classes.input}
-                      value={formValues?.nationalId}
+                      value={formValues?.firstPoint}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
                       disabled={!isEditing}
                     />
                     <TextField
-                      id="name"
-                      name="name"
-                      label="Name"
+                      id="lastPoint"
+                      name="lastPoint"
+                      label="Last Point"
                       type="text"
                       className={classes.input}
-                      value={formValues?.name}
+                      value={formValues?.lastPoint}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
                       disabled={!isEditing}
                     />
                     <TextField
-                      id="codeLicense"
-                      name="codeLicense"
-                      label="Code License"
+                      id="length"
+                      name="length"
+                      label="Length"
                       type="text"
                       className={classes.input}
-                      value={formValues?.codeLicense}
+                      value={formValues?.length}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
                       disabled={!isEditing}
                     />
                     <TextField
-                      id="typeLicense"
-                      name="typeLicense"
-                      label="Type License"
+                      id="complexity"
+                      name="complexity"
+                      label="Complexity"
                       type="text"
                       className={classes.input}
-                      value={formValues.typeLicense}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                      disabled={!isEditing}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="address"
-                      name="address"
-                      label="Address"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.address}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                      disabled={!isEditing}
-                    />
-                    <TextField
-                      id="dob"
-                      label="Date of Birth"
-                      type="date"
-                      value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
-                      sx={{ width: 220 }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      name="dob"
-                      className={classes.input}
-                      variant="outlined"
-                      disabled={!isEditing}
-                    />
-                    <TextField
-                      id="seniority"
-                      name="seniority"
-                      label="Seniority"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.seniority}
+                      value={formValues?.complexity}
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
@@ -201,4 +157,4 @@ function DriverDetail() {
   )
 }
 
-export default DriverDetail
+export default LineBusDetail

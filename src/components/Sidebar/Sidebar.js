@@ -57,7 +57,8 @@ const structure = [
     ],
   },
   { id: 5, type: "divider" },
-  { id: 6, label: "Drivers", link: "/app/drivers", icon: <DriveEtaIcon /> }
+  { id: 6, label: "Drivers", link: "/app/drivers", icon: <DriveEtaIcon /> },
+  { id: 8, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
 ];
 
 function Sidebar({ location }) {
