@@ -35,16 +35,19 @@ import Charts from "../../pages/charts";
 import Drivers from "../../pages/Drivers";
 import Bus from "../../pages/Bus";
 
+import LineBuses from "../../pages/LineBuses";
 // context
 import { useLayoutState } from "../../context/LayoutContext";
 import DriverDetail from "../../pages/Drivers/DriverDetail";
 import NewDriver from "../../pages/Drivers/NewDriver";
-import Bus from "../../pages/Bus";
 import BusDetail from "../../pages/Bus/BusDetail";
 import NewBus from "../../pages/Bus/NewBus";
 import TripBus from "../../pages/TripBus";
 import TripBusDetail from "../../pages/TripBus/TripBusDetail";
 import TripBusNew from "../../pages/TripBus/TripBus";
+
+import LineBusDetail from "../../pages/LineBuses/LineBusDetail";
+import NewLineBus from "../../pages/LineBuses/NewLineBus";
 
 function Layout(props) {
   var classes = useStyles();
@@ -99,9 +102,13 @@ function Layout(props) {
             <Route exact path="/app/tripbus" component={TripBus} />
             <Route exact path="/app/tripbus/create" component={TripBusNew} />
             <Route exact path="/app/tripbus/:id" component={TripBusDetail} />
+            <Route exact path="/app/lineBuses" component={LineBuses} />
+            <Route exact path="/app/lineBuses/create" component={NewLineBus} />
+            <Route exact path="/app/lineBuses/:id" component={LineBusDetail} />
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />
+          
           </Switch>
           <Box
             mt={5}

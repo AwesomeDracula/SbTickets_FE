@@ -18,11 +18,18 @@ export const createTripBus = 'admin/createTripBus';
 
 // linebus
 export const getAllLineBus = 'admin/getLineBus';
+export const getLineBus = 'admin/getLineBus';
+export const createLineBus = 'admin/createLineBus';
+export const updateLineBus = 'admin/updateLineBus';
+export const deleteLineBus = 'admin/deleteLineBus';
+export const deleteLineBuses = 'admin/deleteLineBuses';
 
 // buses
-export const getAllBuses = 'getBus';
-export const getBus = 'getBusByID';
-export const createBus = 'createBus';
-export const updateBus = 'updateBus';
-export const deleteBus = 'deleteBus';
-export const deleteBuses = 'deleteBuses';
+export const getAllBuses = 'admin/getBus';
+export const getBus = 'admin/getBus';
+export const createBus = 'admin/createBus';
+export const updateBus = 'admin/updateBus';
+export const deleteBus = 'admin/deleteBus';
+export const deleteBuses = 'admin/deleteBuses';
+
+

@@ -62,6 +62,7 @@ const structure = [
   { id: 6, label: "Drivers", link: "/app/drivers", icon: <BusEtaIcon/> },
   { id: 7, label: "Bus", link: "/app/buses", icon: <DriveEtaIcon /> },
   { id: 8, label: "TripBus", link: "/app/tripbus", icon: <TripOriginIcon/> },
+  { id: 9, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
 ];
 
 function Sidebar({ location }) {

@@ -36,7 +36,7 @@ function TripBusNew() {
   const [listDriver, setlistDriver] = useState([]);
 
   useEffect(() => {
-    let url = AppURL.getAllBus;
+    let url = AppURL.getAllBuses;
     instance.get(url)
       .then(res => {
         //console.log(res);
