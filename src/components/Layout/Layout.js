@@ -33,6 +33,7 @@ import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
 import Drivers from "../../pages/Drivers";
+import Bus from "../../pages/Bus";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -92,9 +93,9 @@ function Layout(props) {
             <Route exact path="/app/drivers" component={Drivers} />
             <Route exact path="/app/drivers/create" component={NewDriver} />
             <Route exact path="/app/drivers/:id" component={DriverDetail} />
-            <Route exact path="/app/bus" component={Bus} />
-            <Route exact path="/app/bus/create" component={NewBus} />
-            <Route exact path="/app/bus/:id" component={BusDetail} />
+            <Route exact path="/app/buses" component={Bus} />
+            <Route exact path="/app/buses/create" component={NewBus} />
+            <Route exact path="/app/buses/:id" component={BusDetail} />
             <Route exact path="/app/tripbus" component={TripBus} />
             <Route exact path="/app/tripbus/create" component={TripBusNew} />
             <Route exact path="/app/tripbus/:id" component={TripBusDetail} />

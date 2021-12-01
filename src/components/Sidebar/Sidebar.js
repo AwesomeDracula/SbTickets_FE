@@ -60,9 +60,7 @@ const structure = [
   },
   { id: 5, type: "divider" },
   { id: 6, label: "Drivers", link: "/app/drivers", icon: <BusEtaIcon/> },
-  
-  { id: 7, label: "Bus", link: "/app/bus", icon: <DriveEtaIcon/> },
-
+  { id: 7, label: "Bus", link: "/app/buses", icon: <DriveEtaIcon /> },
   { id: 8, label: "TripBus", link: "/app/tripbus", icon: <TripOriginIcon/> },
 ];
 

@@ -10,16 +10,6 @@ export const updateDriver = 'admin/updateDriver';
 export const deleteDriver = 'admin/deleteDriver';
 export const deleteDrivers = 'admin/deleteDrivers';
 
-
-// bus
-export const getAllBus = 'admin/getBus';
-export const getBus = 'admin/findBus';
-export const createBus = 'admin/createBus';
-export const updateBus = 'admin/updateBus';
-export const deleteBus = 'admin/deleteBus';
-export const deleteAllBus = 'admin/deleteBuss';
-
-
 // tripbus
 export const getAllTripBus = 'admin/getAllTripBus';
 export const findTripBus = 'admin/findTripBus';
@@ -29,4 +19,10 @@ export const createTripBus = 'admin/createTripBus';
 // linebus
 export const getAllLineBus = 'admin/getLineBus';
 
-
+// buses
+export const getAllBuses = 'getBus';
+export const getBus = 'getBusByID';
+export const createBus = 'createBus';
+export const updateBus = 'updateBus';
+export const deleteBus = 'deleteBus';
+export const deleteBuses = 'deleteBuses';
