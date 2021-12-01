@@ -9,6 +9,7 @@ const instance = Axios.create({
 instance.interceptors.request.use((config) => {
   try {
     let token = getToken();
+    console.log(token);
     if (token) {
       config.headers = {
         ...config.headers,

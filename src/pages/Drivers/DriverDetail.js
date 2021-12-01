@@ -68,7 +68,7 @@ function DriverDetail() {
   }
 
   const handleInputChange = (e) => {
-    console.log(e.target.files[0].name);
+    // console.log(e.target.files[0].name);
     if(e.target.name === 'image'){
       setImageDriver("../" + e.target.files[0].name);
     }
