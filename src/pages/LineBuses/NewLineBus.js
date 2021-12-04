@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, TextField, CircularProgress, Button as MUIButton } from "@material-ui/core";
+import { Grid, TextField, CircularProgress, Button as MUIButton, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -28,9 +28,15 @@ function NewLineBus() {
   const classes = useStyles();
   const [formValues, setFormValues] = useState(data);
 
+  const [firstId, setFirstId] = useState("");
+  const [lastId, setLastId] = useState("");
+  const [listLocation, setlistLocation] = useState([]);
+
   const handleSaveButton = () => {
     instance.post(AppURL.createLineBus, {
       ...formValues,
+      firstId: parseInt(firstId),
+      lastId: parseInt(lastId),
       length: parseInt(formValues.length),
       complexity: parseInt(formValues.complexity)
     })
@@ -42,6 +48,19 @@ function NewLineBus() {
         toast.error(error?.msg);
       })
   }
+
+  useEffect(() => {
+    let url = AppURL.getLocation;
+    instance.get(url)
+      .then(res => {
+        //console.log(res);
+        if (res?.status === 200) {
+          const body = res?.body;
+          setlistLocation(body);
+        }
+
+      })
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,28 +97,74 @@ function NewLineBus() {
               <Widget disableWidgetMenu>
                 <Grid container item xs={12}>
                   <Grid item xs={6}>
-                    <TextField
-                      id="firstPoint"
+                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
+                    <InputLabel id="demo-simple-select-label">First Point</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="LineBus"
+                      value={firstId}
+                      onChange={(e) => setFirstId(e.target.value)}
                       name="firstPoint"
-                      label="First Point"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.firstPoint}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                    />
-                    <TextField
-                      id="lastPoint"
+                      MenuProps={{
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
+                        },
+                        transformOrigin: {
+                          vertical: "top",
+                          horizontal: "left"
+                        },
+                        getContentAnchorEl: null
+                      }}
+
+                    >
+                      {
+                          listLocation.length > 0 && listLocation.map((e) => {
+                            if(lastId === e.id) return;
+                            return <MenuItem value={e.id}>{e.name}</MenuItem>
+                          })
+                      }
+                      {/* <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem> */}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
+                    <InputLabel id="demo-simple-select-label">Last Point</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="LineBus"
+                      value={lastId}
+                      onChange={(e) => setLastId(e.target.value)}
                       name="lastPoint"
-                      label="Last Point"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.lastPoint}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                    />
+                      MenuProps={{
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
+                        },
+                        transformOrigin: {
+                          vertical: "top",
+                          horizontal: "left"
+                        },
+                        getContentAnchorEl: null
+                      }}
+
+                    >
+                      {
+                          listLocation.length > 0 && listLocation.map((e) => {
+                            if(firstId === e.id) return;
+                            return <MenuItem value={e.id}>{e.name}</MenuItem>
+                          }
+                          )
+                      }
+                      {/* <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem> */}
+                    </Select>
+                  </FormControl>
                     <TextField
                       id="length"
                       name="length"

@@ -12,13 +12,15 @@ export default function Tables() {
   let history = useHistory();
   const [datatableData, setData] = useState(null);
   const [rowsSelectedByUser, setRowsSelected] = useState([]);
+
+
   useEffect(() => {
     instance.get(AppURL.getAllLineBus)
       .then(res => {
         const body = res?.body;
         const data = body.map(lineBus => {
           let lineBusData = [];
-          lineBusData.push(lineBus?.id, lineBus?.firstPoint, lineBus?.lastPoint, lineBus?.length, lineBus?.complexity);
+          lineBusData.push(lineBus?.id, lineBus?.firstPoint.address, lineBus?.lastPoint.address, lineBus?.length, lineBus?.complexity);
           return lineBusData;
         })
         setData(data);

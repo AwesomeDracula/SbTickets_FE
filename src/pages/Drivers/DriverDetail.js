@@ -126,6 +126,7 @@ function DriverDetail() {
                       type="variant"
                       variant="outlined"
                       disabled={!isEditing}
+                      style={{marginTop: `30px`}}
                     />
                     <TextField
                       id="name"
@@ -194,7 +195,8 @@ function DriverDetail() {
                       id="dob"
                       label="Date of Birth"
                       type="date"
-                      value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
+                      // value={formValues?.dob}
+                      onChange={handleInputChange}
                       sx={{ width: 220 }}
                       InputLabelProps={{
                         shrink: true,

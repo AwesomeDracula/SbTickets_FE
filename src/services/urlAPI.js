@@ -32,4 +32,11 @@ export const updateBus = 'admin/updateBus';
 export const deleteBus = 'admin/deleteBus';
 export const deleteBuses = 'admin/deleteBuses';
 
+//address
+export const getLocation = 'admin/getLocation';
 
+// wages
+export const getListWages = 'admin/getListWages';
+
+// customer booked
+export const getTripBusCustomer = 'admin/getTripBusCustomer';

@@ -48,6 +48,8 @@ import TripBusNew from "../../pages/TripBus/TripBus";
 
 import LineBusDetail from "../../pages/LineBuses/LineBusDetail";
 import NewLineBus from "../../pages/LineBuses/NewLineBus";
+import Statistical from "../../pages/Statistical/Statistical";
+import StatisticalCustomerBook from "../../pages/StatisticalCustomerBook/StatisticalCustomerBook";
 
 function Layout(props) {
   var classes = useStyles();
@@ -105,6 +107,8 @@ function Layout(props) {
             <Route exact path="/app/lineBuses" component={LineBuses} />
             <Route exact path="/app/lineBuses/create" component={NewLineBus} />
             <Route exact path="/app/lineBuses/:id" component={LineBusDetail} />
+            <Route exact path="/app/statistical" component={Statistical} />
+            <Route exact path="/app/statisticalBookBus" component={StatisticalCustomerBook} />
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />

@@ -23,7 +23,7 @@ export default function TripBus() {
           let assitDriverId = listTripBusDriver.find(item => item.tripbusId == tripbus?.id && item.roleCar == '0')?.driverId;
           console.log("driverId: " + driverId);
           if(!driverId) driverId = "";
-          tripBusData.push(tripbus?.id, driverId, assitDriverId, tripbus?.bus.carNumber, tripbus?.bus.color, tripbus?.lineBus.firstPoint,  tripbus?.lineBus.lastPoint,  tripbus?.numberGuest, tripbus?.priceTrip, tripbus?.timeTrip);
+          tripBusData.push(tripbus?.id, driverId, assitDriverId, tripbus?.bus.carNumber, tripbus?.bus.color, tripbus.lineBus.firstPoint.address,  tripbus.lineBus.lastPoint.address,  tripbus?.numberGuest, tripbus?.priceTrip, tripbus?.timeTrip);
           return tripBusData;
         })
         console.log(data);

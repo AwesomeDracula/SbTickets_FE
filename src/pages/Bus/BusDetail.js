@@ -24,7 +24,7 @@ function BusDetail() {
     const { id } = useParams();
     const [formValues, setFormValues] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-
+    const [datemain, setDateMain] = useState("");
     useEffect(() => {
         let url = AppURL.getBus + '/' + id;
         instance.get(url)
@@ -41,6 +41,7 @@ function BusDetail() {
                         dateMantain: body?.dateMantain,
                     };
                     setFormValues(data);
+                    setDateMain(body?.dateMantain);
                 }
 
             })
@@ -67,6 +68,7 @@ function BusDetail() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log("name" + e.target.name + " " + e.target.value)
         setFormValues({
             ...formValues,
             [name]: value,
@@ -178,11 +180,14 @@ function BusDetail() {
                                             id="dateMantain"
                                             label="Date Maintain"
                                             type="date"
-                                            value={new Date(new Date(formValues?.dateMantain).getTime() - new Date(formValues?.dateMantain).getTimezoneOffset() * 60 * 1000)}
+                                            value={datemain}
                                             sx={{ width: 220 }}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
+                                            onChange={
+                                                handleInputChange
+                                            }
                                             name="dateMantain"
                                             className={classes.input}
                                             variant="outlined"

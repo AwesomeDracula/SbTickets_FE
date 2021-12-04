@@ -209,7 +209,7 @@ function TripBusNew() {
                     >
                       {
                           listLineBus.length > 0 && listLineBus.map((e) => (
-                            <MenuItem value={e.id}>{e.firstPoint} {e.lastPoint}</MenuItem>
+                            <MenuItem value={e.id}>{e.firstPoint.address} {e.lastPoint.address}</MenuItem>
                           ))
                       }
                       {/* <MenuItem value={10}>Ten</MenuItem>

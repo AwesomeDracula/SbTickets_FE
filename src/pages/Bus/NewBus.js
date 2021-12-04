@@ -156,8 +156,8 @@ function NewBus() {
                                             id="dateMantain"
                                             label="Date Maintain"
                                             type="date"
-                                            value={new Date(new Date(formValues?.dateMantain).getTime() - new Date(formValues?.dateMantain).getTimezoneOffset() * 60 * 1000)}
                                             sx={{ width: 220 }}
+                                            onChange={handleInputChange}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}

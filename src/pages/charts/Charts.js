@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Grid } from "@material-ui/core";
 import { useTheme } from "@material-ui/styles";
 import {
@@ -20,51 +20,32 @@ import Widget from "../../components/Widget/Widget";
 import ApexLineChart from "./components/ApexLineChart";
 import ApexHeatmap from "./components/ApexHeatmap";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import instance from "../../services";
+import { set } from "date-fns";
 
-const lineChartData = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+// const lineChartData = [
+//   {
+//     name: "Week 1",
+//     count: 2000,
+//   },
+//   {
+//     name: "Week 2",
+//     count: 1398,
+//   },
+//   {
+//     name: "Week 3",
+//     count: 9800,
+//   },
+//   {
+//     name: "Week 4",
+//     count: 3908,
+//   },
+//   {
+//     name: "Week 5",
+//     count: 4800,
+//   },
+// ];
+
 
 const pieChartData = [
   { name: "Group A", value: 400 },
@@ -75,6 +56,49 @@ const pieChartData = [
 
 export default function Charts(props) {
   var theme = useTheme();
+
+  const [lineChartData,setLineChartData
+    // {
+    //   name: "Week 1",
+    //   count: 2000,
+    // },
+    // {
+    //   name: "Week 2",
+    //   count: 1398,
+    // },
+    // {
+    //   name: "Week 3",
+    //   count: 9800,
+    // },
+    // {
+    //   name: "Week 4",
+    //   count: 3908,
+    // },
+    // {
+    //   name: "Week 5",
+    //   count: 4800,
+    // },
+  ] = useState([])
+  
+  useEffect(() => {
+    let url = "/admin/getCountTripByWeek";
+    instance.get(url)
+      .then(res => {
+        //console.log(res);
+        if (res?.status === 200) {
+          const data = res?.body;
+          const lineChartData1 = [];
+          data.find((element) => {
+            lineChartData1.push({
+              name: "Week " + element.week,
+              count: element.count
+            })
+          });
+          setLineChartData(lineChartData1);
+        }
+      })
+  }, []);
+
 
   // local
   var [activeIndex, setActiveIndexId] = useState(0);
@@ -102,7 +126,7 @@ export default function Charts(props) {
           </Widget>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Widget title="Simple Line Chart" noBodyPadding upperTitle>
+          <Widget title=" Line Chart" noBodyPadding upperTitle>
             <ResponsiveContainer width="100%" height={350}>
               <LineChart
                 width={500}
@@ -122,20 +146,20 @@ export default function Charts(props) {
                 <Legend />
                 <Line
                   type="monotone"
-                  dataKey="pv"
+                  dataKey="count"
                   stroke={theme.palette.primary.main}
                   activeDot={{ r: 8 }}
                 />
-                <Line
+                {/* <Line
                   type="monotone"
                   dataKey="uv"
                   stroke={theme.palette.secondary.main}
-                />
+                /> */}
               </LineChart>
             </ResponsiveContainer>
           </Widget>
         </Grid>
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Widget title="Pie Chart with Tooltips" noBodyPadding upperTitle>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart width={200} height={300}>
@@ -152,7 +176,7 @@ export default function Charts(props) {
               </PieChart>
             </ResponsiveContainer>
           </Widget>
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
@@ -219,7 +243,7 @@ function renderActiveShape(props) {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`PV ${value}`}</text>
+      >{`count ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
