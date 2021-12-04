@@ -78,9 +78,10 @@ export default function Statistical() {
         toast.warning("Please select driver and time to Statistical");
       }
       else{
+        let time = timePicker.split("-")[1].length === 1 ? timePicker.split("-")[0] + "-0" + timePicker.split("-")[1] : timePicker;
         instance.post(AppURL.getListWages, {
           id: selecteDriver,
-          scrapTime: timePicker.substring(0,7),
+          scrapTime: time,
         })
           .then(res => {
 
