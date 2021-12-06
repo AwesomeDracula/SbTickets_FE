@@ -50,6 +50,9 @@ import LineBusDetail from "../../pages/LineBuses/LineBusDetail";
 import NewLineBus from "../../pages/LineBuses/NewLineBus";
 import Statistical from "../../pages/Statistical/Statistical";
 import StatisticalCustomerBook from "../../pages/StatisticalCustomerBook/StatisticalCustomerBook";
+import index from "../../pages/StatisticalRevenueBus/RevenueBus";
+import RevenueBus from "../../pages/StatisticalRevenueBus/RevenueBus";
+import RevenueBusDetail from "../../pages/StatisticalRevenueBus/RevenueBusDetail";
 
 function Layout(props) {
   var classes = useStyles();
@@ -109,6 +112,8 @@ function Layout(props) {
             <Route exact path="/app/lineBuses/:id" component={LineBusDetail} />
             <Route exact path="/app/statistical" component={Statistical} />
             <Route exact path="/app/statisticalBookBus" component={StatisticalCustomerBook} />
+            <Route exact path="/app/revenueBus" component={RevenueBus} />
+            <Route exact path="/app/revenueBus/:id" component={RevenueBusDetail} />
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />

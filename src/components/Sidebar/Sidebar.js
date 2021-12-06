@@ -64,9 +64,10 @@ const structure = [
   { id: 7, label: "Bus", link: "/app/buses", icon: <DriveEtaIcon /> },
   { id: 8, label: "TripBus", link: "/app/tripbus", icon: <TripOriginIcon/> },
   { id: 9, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
-  { id: 10, type: "divider" },
+  //{ id: 10, type: "divider" },
   { id: 11, label: "Statistical Wages", link: "/app/statistical", icon: <TypographyIcon /> },
-  { id: 12, label: "CustomerBookedBus", link: "/app/statisticalBookBus", icon: <AirplayIcon /> }
+  { id: 12, label: "CustomerBookedBus", link: "/app/statisticalBookBus", icon: <AirplayIcon /> },
+  { id: 13, label: "Revenue Bus", link: "/app/revenueBus", icon: <TypographyIcon /> },
 ];
 
 function Sidebar({ location }) {

@@ -40,3 +40,7 @@ export const getListWages = 'admin/getListWages';
 
 // customer booked
 export const getTripBusCustomer = 'admin/getTripBusCustomer';
+
+// RevenueBus
+export const getRevenueBus = 'admin/getRevenueBus';
+export const getRevenueBuById = 'admin/getRevenueBus';
