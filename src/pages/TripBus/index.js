@@ -5,24 +5,28 @@ import * as AppURL from '../../services/urlAPI';
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 // components
-import PageTitle from "../../components/PageTitle";
+import PageTitle from "../../components/PageTitle/PageTitle";
 import instance from "../../services";
 
-export default function Tables() {
+export default function TripBus() {
   let history = useHistory();
   const [datatableData, setData] = useState(null);
   const [rowsSelectedByUser, setRowsSelected] = useState([]);
-
-
   useEffect(() => {
-    instance.get(AppURL.getAllLineBus)
+    instance.get(AppURL.getAllTripBus)
       .then(res => {
-        const body = res?.body;
-        const data = body.map(lineBus => {
-          let lineBusData = [];
-          lineBusData.push(lineBus?.id, lineBus?.firstPoint.address, lineBus?.lastPoint.address, lineBus?.length, lineBus?.complexity);
-          return lineBusData;
+        const listTripBus = res?.body.listTripBus;
+        const listTripBusDriver = res?.body.listTripBusDriver;
+        const data = listTripBus.map(tripbus => {
+          let tripBusData = [];
+          let driverId = listTripBusDriver.find(item => item.tripbusId == tripbus?.id && item.roleCar == '1')?.driverId;
+          let assitDriverId = listTripBusDriver.find(item => item.tripbusId == tripbus?.id && item.roleCar == '0')?.driverId;
+          console.log("driverId: " + driverId);
+          if(!driverId) driverId = "";
+          tripBusData.push(tripbus?.id, driverId, assitDriverId, tripbus?.bus.carNumber, tripbus?.bus.color, tripbus.lineBus.firstPoint.address,  tripbus.lineBus.lastPoint.address,  tripbus?.numberGuest, tripbus?.priceTrip, tripbus?.timeTrip);
+          return tripBusData;
         })
+        console.log(data);
         setData(data);
       })
       .catch(error => {
@@ -32,7 +36,15 @@ export default function Tables() {
 
   const handleRowClick = (rowData, rowMeta) => {
     console.log('hello', rowData, rowMeta);
-    history.push(`/app/lineBuses/${rowData[0]}`);
+    // history.push(`/app/tripbus/${rowData[0]}/${rowData[1]}/${rowData[1]}`);
+    history.push({
+      pathname: `/app/tripbus/${rowData[0]}`,
+      state: {
+        id: rowData[0],
+        driverId: rowData[1],
+        assitanceId: rowData[2]
+      }
+    })
   }
 
   const handleRowDelete = () => {
@@ -41,7 +53,7 @@ export default function Tables() {
       if (rowsSelectedByUser.includes(idx))
         rowsToDelete.push(data[0]);
     })
-    instance.post(AppURL.deleteLineBuses, rowsToDelete)
+    instance.post(AppURL.deleteBus, rowsToDelete)
       .then(res => {
         toast.success(res?.msg);
       }).catch(error => {
@@ -61,7 +73,7 @@ export default function Tables() {
           variant="contained"
           size="medium"
           color="primary"
-          onClick={() => { history.push(`/app/lineBuses/create`) }}
+          onClick={() => { history.push(`/app/tripbus/create`) }}
         >
           New
         </MUIButton>} />
@@ -69,9 +81,9 @@ export default function Tables() {
         <Grid item xs={12}>
           {
             datatableData ? <MUIDataTable
-              title="LineBus List"
+              title="TripBus List"
               data={datatableData}
-              columns={["Id", "First Point", "Last Point", "Length", "Complexity"]}
+              columns={[ "Id" ,"","",  "CarNumber", "color", "FirstPoint", "LastPoint","NumberGuest", "PriceTrip", "TimeTrip"]}
               options={{
                 filterType: "checkbox",
                 draggableColumns: true,

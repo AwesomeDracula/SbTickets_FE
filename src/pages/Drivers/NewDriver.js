@@ -36,7 +36,6 @@ function NewDriver() {
     instance.post(AppURL.createDriver, {
       ...formValues,
       seniority: parseInt(formValues.seniority),
-      salaryId: 1
     })
       .then(res => {
         toast.success(res?.msg);
@@ -49,6 +48,7 @@ function NewDriver() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log("name" + e.target.name + " " + e.target.value)
     setFormValues({
       ...formValues,
       [name]: value,
@@ -143,11 +143,12 @@ function NewDriver() {
                       id="dob"
                       label="Date of Birth"
                       type="date"
-                      value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
+                      //value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
                       sx={{ width: 220 }}
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      onChange={handleInputChange}
                       name="dob"
                       className={classes.input}
                       variant="outlined"

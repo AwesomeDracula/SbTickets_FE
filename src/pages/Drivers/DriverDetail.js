@@ -42,6 +42,7 @@ function DriverDetail() {
             image: body?.image,
           };
           setFormValues(data);
+          setImageDriver(data.image);
         }
 
       })
@@ -54,9 +55,9 @@ function DriverDetail() {
         ...formValues,
         seniority: parseInt(formValues.seniority),
         salaryId: 1,
-        dob: '2000-01-01'
-      })
-      .then(res => {
+        dob: '2000-01-01',
+        image: imageDrvier
+      }).then(res => {
         toast.success(res?.msg);
         history.goBack();
       }).catch(error => {
@@ -67,12 +68,18 @@ function DriverDetail() {
   }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    // console.log(e.target.files[0].name);
+    if(e.target.name === 'image'){
+      setImageDriver("../" + e.target.files[0].name);
+    }
+    const { name, value }  = e.target;
     setFormValues({
       ...formValues,
       [name]: value,
     });
   };
+
+  const [imageDrvier, setImageDriver] = useState("");
 
   return (
     <>
@@ -101,6 +108,13 @@ function DriverDetail() {
               <Widget disableWidgetMenu>
                 <Grid container item xs={12}>
                   <Grid item xs={6}>
+                      <div className="MuiFormControl-root MuiTextField-root makeStyles-input-60">
+                        <img src={imageDrvier}
+                            variant="outlined"
+                            id="image" 
+                            width="200" height="120" />
+                        <input type="file"  onChange={handleInputChange} disabled={!isEditing} name="image"/>
+                      </div>
                     <TextField
                       id="nationalId"
                       name="nationalId"
@@ -112,6 +126,7 @@ function DriverDetail() {
                       type="variant"
                       variant="outlined"
                       disabled={!isEditing}
+                      style={{marginTop: `30px`}}
                     />
                     <TextField
                       id="name"
@@ -137,7 +152,22 @@ function DriverDetail() {
                       variant="outlined"
                       disabled={!isEditing}
                     />
-                    <TextField
+                    {/* <TextField
+                      id="typeLicense"
+                      name="typeLicense"
+                      label="Type License"
+                      type="text"
+                      className={classes.input}
+                      value={formValues.typeLicense}
+                      onChange={handleInputChange}
+                      type="variant"
+                      variant="outlined"
+                      disabled={!isEditing}
+                    /> */}
+                    
+                  </Grid>
+                  <Grid item xs={6}>
+                  <TextField
                       id="typeLicense"
                       name="typeLicense"
                       label="Type License"
@@ -149,8 +179,6 @@ function DriverDetail() {
                       variant="outlined"
                       disabled={!isEditing}
                     />
-                  </Grid>
-                  <Grid item xs={6}>
                     <TextField
                       id="address"
                       name="address"
@@ -167,7 +195,8 @@ function DriverDetail() {
                       id="dob"
                       label="Date of Birth"
                       type="date"
-                      value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
+                      // value={formValues?.dob}
+                      onChange={handleInputChange}
                       sx={{ width: 220 }}
                       InputLabelProps={{
                         shrink: true,

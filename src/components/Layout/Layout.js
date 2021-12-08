@@ -33,14 +33,25 @@ import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
 import Drivers from "../../pages/Drivers";
+import Bus from "../../pages/Bus";
+import TripBusAddress from "../../pages/TripBusAddress";
 import LineBuses from "../../pages/LineBuses";
 // context
 import { useLayoutState } from "../../context/LayoutContext";
 import DriverDetail from "../../pages/Drivers/DriverDetail";
 import NewDriver from "../../pages/Drivers/NewDriver";
+import BusDetail from "../../pages/Bus/BusDetail";
+import NewBus from "../../pages/Bus/NewBus";
+import TripBus from "../../pages/TripBus";
+import TripBusDetail from "../../pages/TripBus/TripBusDetail";
+import TripBusNew from "../../pages/TripBus/TripBus";
 
 import LineBusDetail from "../../pages/LineBuses/LineBusDetail";
 import NewLineBus from "../../pages/LineBuses/NewLineBus";
+import TripBusAddressDetail from "../../pages/TripBusAddress/TripBusAddressDetail";
+import NewTripBusAddress from "../../pages/TripBusAddress/NewTripBusAddress";
+import Statistical from "../../pages/Statistical/Statistical";
+import StatisticalCustomerBook from "../../pages/StatisticalCustomerBook/StatisticalCustomerBook";
 
 function Layout(props) {
   var classes = useStyles();
@@ -89,9 +100,22 @@ function Layout(props) {
             <Route exact path="/app/drivers" component={Drivers} />
             <Route exact path="/app/drivers/create" component={NewDriver} />
             <Route exact path="/app/drivers/:id" component={DriverDetail} />
+            <Route exact path="/app/buses" component={Bus} />
+            <Route exact path="/app/buses/create" component={NewBus} />
+            <Route exact path="/app/buses/:id" component={BusDetail} />
+            <Route exact path="/app/tripbus" component={TripBus} />
+            <Route exact path="/app/tripbus/create" component={TripBusNew} />
+            <Route exact path="/app/tripbus/:id" component={TripBusDetail} />
             <Route exact path="/app/lineBuses" component={LineBuses} />
             <Route exact path="/app/lineBuses/create" component={NewLineBus} />
             <Route exact path="/app/lineBuses/:id" component={LineBusDetail} />
+
+            <Route exact path="/app/tripBusAddress" component={TripBusAddress} />
+            <Route exact path="/app/tripBusAddress/create" component={NewTripBusAddress} />
+            <Route exact path="/app/tripBusAddress/:id" component={TripBusAddressDetail} />
+
+            <Route exact path="/app/statistical" component={Statistical} />
+            <Route exact path="/app/statisticalBookBus" component={StatisticalCustomerBook} />
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />

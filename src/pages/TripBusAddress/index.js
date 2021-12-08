@@ -12,16 +12,14 @@ export default function Tables() {
   let history = useHistory();
   const [datatableData, setData] = useState(null);
   const [rowsSelectedByUser, setRowsSelected] = useState([]);
-
-
   useEffect(() => {
-    instance.get(AppURL.getAllLineBus)
+    instance.get(AppURL.getAllTripBusAddress)
       .then(res => {
         const body = res?.body;
-        const data = body.map(lineBus => {
-          let lineBusData = [];
-          lineBusData.push(lineBus?.id, lineBus?.firstPoint.address, lineBus?.lastPoint.address, lineBus?.length, lineBus?.complexity);
-          return lineBusData;
+        const data = body.map(tripBusAddress => {
+          let tripBusAddressData = [];
+          tripBusAddressData.push(tripBusAddress?.id, tripBusAddress?.address);
+          return tripBusAddressData;
         })
         setData(data);
       })
@@ -32,7 +30,7 @@ export default function Tables() {
 
   const handleRowClick = (rowData, rowMeta) => {
     console.log('hello', rowData, rowMeta);
-    history.push(`/app/lineBuses/${rowData[0]}`);
+    history.push(`/app/tripBusAddress/${rowData[0]}`);
   }
 
   const handleRowDelete = () => {
@@ -41,7 +39,7 @@ export default function Tables() {
       if (rowsSelectedByUser.includes(idx))
         rowsToDelete.push(data[0]);
     })
-    instance.post(AppURL.deleteLineBuses, rowsToDelete)
+    instance.post(AppURL.deleteTripBusAddresses, rowsToDelete)
       .then(res => {
         toast.success(res?.msg);
       }).catch(error => {
@@ -61,7 +59,7 @@ export default function Tables() {
           variant="contained"
           size="medium"
           color="primary"
-          onClick={() => { history.push(`/app/lineBuses/create`) }}
+          onClick={() => { history.push(`/app/tripBusAddress/create`) }}
         >
           New
         </MUIButton>} />
@@ -69,9 +67,9 @@ export default function Tables() {
         <Grid item xs={12}>
           {
             datatableData ? <MUIDataTable
-              title="LineBus List"
+              title="Trip Bus Address List"
               data={datatableData}
-              columns={["Id", "First Point", "Last Point", "Length", "Complexity"]}
+              columns={["Id", "Address"]}
               options={{
                 filterType: "checkbox",
                 draggableColumns: true,

@@ -17,6 +17,7 @@ import useStyles from "./styles";
 
 // components
 import Dot from "../Dot";
+import Bus from "../../../../pages/Bus";
 
 export default function SidebarLink({
   link,
@@ -47,7 +48,7 @@ export default function SidebarLink({
       </Typography>
     );
 
-  if (type === "divider") return <Divider className={classes.divider} />;
+  if (type === "divider") return  <Divider className={classes.divider} />;
   if (link && link.includes('http')) {
     return (
       <ListItem

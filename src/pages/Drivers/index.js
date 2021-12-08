@@ -15,6 +15,7 @@ export default function Tables() {
   useEffect(() => {
     instance.get(AppURL.getAllDrivers)
       .then(res => {
+        console.log(JSON.stringify(res));
         const body = res?.body;
         const data = body.map(driver => {
           let driverData = [];

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, TextField, CircularProgress, Button as MUIButton } from "@material-ui/core";
+import { Grid, TextField, CircularProgress, Button as MUIButton, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { Typography, Button } from "../../components/Wrappers/Wrappers";
@@ -24,6 +24,10 @@ function LineBusDetail() {
   const { id } = useParams();
   const [formValues, setFormValues] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [listLocation, setlistLocation] = useState([]);
+
+  const [firstId, setFirstId] = useState("");
+  const [lastId, setLastId] = useState("");
 
   useEffect(() => {
     let url = AppURL.getLineBus + '/' + id;
@@ -32,23 +36,44 @@ function LineBusDetail() {
         if (res?.status === 200) {
           const body = res?.body;
           let data = {
-            firstPoint: body?.firstPoint,
-            lastPoint: body?.lastPoint,
+            firstPoint: body?.firstPoint.id,
+            lastPoint: body?.lastPoint.id,
             length: body?.length,
             complexity: body?.complexity,
           };
-
+          setFirstId(body?.firstPoint.id);
+          setLastId(body?.lastPoint.id);
           setFormValues(data);
         }
 
       })
   }, []);
 
+
+  useEffect(() => {
+    let url = AppURL.getLocation;
+    instance.get(url)
+      .then(res => {
+        console.log(firstId);
+        console.log(lastId);
+        if (res?.status === 200) {
+          const body = res?.body;
+          setlistLocation(body);
+        }
+      })
+  }, []);
+
+  console.log("firstId " + firstId);
+  console.log("lastId" + lastId);
+  console.log("listLocation" + listLocation);
+
   const handleEditButton = () => {
     if (isEditing) {
       let url = AppURL.updateLineBus + '/' + id;
       instance.put(url, {
         ...formValues,
+        firstId: parseInt(firstId),
+        lastId: parseInt(lastId),
         length: parseInt(formValues.length),
         complexity: parseInt(formValues.complexity)
       })
@@ -97,30 +122,76 @@ function LineBusDetail() {
               <Widget disableWidgetMenu>
                 <Grid container item xs={12}>
                   <Grid item xs={6}>
-                    <TextField
-                      id="firstPoint"
+                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
+                    <InputLabel id="demo-simple-select-label">First Point</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="LineBus"
+                      value={firstId}
+                      onChange={(e) => setFirstId(e.target.value)}
                       name="firstPoint"
-                      label="First Point"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.firstPoint}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
+                      MenuProps={{
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
+                        },
+                        transformOrigin: {
+                          vertical: "top",
+                          horizontal: "left"
+                        },
+                        getContentAnchorEl: null
+                      }}
+
                       disabled={!isEditing}
-                    />
-                    <TextField
-                      id="lastPoint"
+                    >
+                      {
+                          listLocation.length > 0 && listLocation.map((e) => {
+                            if(lastId === e.id) return;
+                            return <MenuItem value={e.id}>{e.address}</MenuItem>
+                          })
+                      }
+                      {/* <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem> */}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
+                    <InputLabel id="demo-simple-select-label">Last Point</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="LineBus"
+                      value={lastId}
+                      onChange={(e) => setLastId(e.target.value)}
                       name="lastPoint"
-                      label="Last Point"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.lastPoint}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
+                      MenuProps={{
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
+                        },
+                        transformOrigin: {
+                          vertical: "top",
+                          horizontal: "left"
+                        },
+                        getContentAnchorEl: null
+                      }}
+
                       disabled={!isEditing}
-                    />
+                    >
+                      {
+                          listLocation.length > 0 && listLocation.map((e) => {
+                            if(firstId === e.id) return;
+                            return <MenuItem value={e.id}>{e.address}</MenuItem>
+                          }
+                          )
+                      }
+                      {/* <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem> */}
+                    </Select>
+                  </FormControl>
                     <TextField
                       id="length"
                       name="length"

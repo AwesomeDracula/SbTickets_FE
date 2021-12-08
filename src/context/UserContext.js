@@ -61,9 +61,10 @@ async function loginUser(dispatch, login, password, history, setIsLoading, notif
     await instance.post(AppURL.login, { username: login, password })
       .then(res => {
         const status = res?.status;
+        console.log("status");
         if (status === 200) {
           const authToken = res?.token;
-          localStorage.setItem('id_token', authToken);
+          localStorage.setItem("id_token", authToken);
           setIsLoading(false)
           dispatch({ type: 'LOGIN_SUCCESS' })
           history.push('/app/dashboard')

@@ -10,7 +10,10 @@ import {
   LibraryBooks as LibraryIcon,
   HelpOutline as FAQIcon,
   ArrowBack as ArrowBackIcon,
-  DriveEta as DriveEtaIcon
+  DriveEta as DriveEtaIcon,
+  Business as BusEtaIcon,
+  TripOrigin as TripOriginIcon,
+  Airplay as AirplayIcon
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -57,8 +60,15 @@ const structure = [
     ],
   },
   { id: 5, type: "divider" },
-  { id: 6, label: "Drivers", link: "/app/drivers", icon: <DriveEtaIcon /> },
-  { id: 8, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
+  { id: 6, label: "Drivers", link: "/app/drivers", icon: <BusEtaIcon/> },
+  { id: 7, label: "Bus", link: "/app/buses", icon: <DriveEtaIcon /> },
+  { id: 8, label: "TripBus", link: "/app/tripbus", icon: <TripOriginIcon/> },
+  { id: 9, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
+  { id: 10, label: "Trip Bus Address", link: "/app/tripBusAddress", icon: <BusEtaIcon/> },
+  { id: 11, type: "divider" },
+  { id: 12, label: "Statistical Wages", link: "/app/statistical", icon: <TypographyIcon /> },
+  { id: 13, label: "CustomerBookedBus", link: "/app/statisticalBookBus", icon: <AirplayIcon /> },
+  
 ];
 
 function Sidebar({ location }) {
