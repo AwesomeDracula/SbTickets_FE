@@ -151,7 +151,7 @@ export default function StatisticalCustomerBook() {
                     >
                       {
                           listTripBus.length > 0 && listTripBus.map((e) => {
-                            return <MenuItem value={e.id}>TripBus {e.id} {e.lineBus.firstPoint.address} {e.lineBus.firstPoint.address}</MenuItem>
+                            return <MenuItem value={e.id}>{e.lineBus.firstPoint.address} - {e.lineBus.lastPoint.address} - {e.id}</MenuItem>
                           })
                       }
                       {/* <MenuItem value={10}>Ten</MenuItem>

@@ -113,7 +113,7 @@ function DriverDetail() {
                             variant="outlined"
                             id="image" 
                             width="200" height="120" />
-                        <input type="file"  onChange={handleInputChange} disabled={!isEditing} name="image"/>
+                        {/* <input type="file"  onChange={handleInputChange} disabled={!isEditing} name="image"/> */}
                       </div>
                     <TextField
                       id="nationalId"
