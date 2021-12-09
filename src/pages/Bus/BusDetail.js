@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import * as AppURL from '../../services/urlAPI';
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import * as Utils from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -38,10 +39,10 @@ function BusDetail() {
                         lifeCar: body?.lifeCar,
                         numberSeats: body?.numberSeats,
                         yearUse: body?.yearUse,
-                        dateMantain: body?.dateMantain,
+                        dateMantain: Utils.formatDateShow(body?.dateMantain),
                     };
                     setFormValues(data);
-                    setDateMain(body?.dateMantain);
+                    setDateMain(Utils.formatDateShow(body?.dateMantain));
                 }
 
             })
@@ -55,7 +56,7 @@ function BusDetail() {
                 carNumber: parseInt(formValues.carNumber),
                 numberSeats: parseInt(formValues.numberSeats),
                 yearUse: parseInt(formValues.yearUse),
-                dateMantain: '2022-01-01'
+                dateMantain: Utils.formatDateShow(formValues.dateMantain),
             }).then(res => {
                 toast.success(res?.msg);
                 history.goBack();
@@ -180,7 +181,7 @@ function BusDetail() {
                                             id="dateMantain"
                                             label="Date Maintain"
                                             type="date"
-                                            value={datemain}
+                                            value={Utils.formatDateShow(formValues?.dateMantain)}
                                             sx={{ width: 220 }}
                                             InputLabelProps={{
                                                 shrink: true,

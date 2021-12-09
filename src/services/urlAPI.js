@@ -32,6 +32,13 @@ export const updateBus = 'admin/updateBus';
 export const deleteBus = 'admin/deleteBus';
 export const deleteBuses = 'admin/deleteBuses';
 
+// trip_bus_address
+export const getAllTripBusAddress = 'admin/getTripBusAddress';
+export const getTripBusAddress = 'admin/getTripBusAddress';
+export const createTripBusAddress = 'admin/createTripBusAddress';
+export const updateTripBusAddress = 'admin/updateTripBusAddress';
+export const deleteTripBusAddress = 'admin/deleteTripBusAddress';
+export const deleteTripBusAddresses = 'admin/deleteTripBusAddresses';
 //address
 export const getLocation = 'admin/getLocation';
 

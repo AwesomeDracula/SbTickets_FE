@@ -34,7 +34,7 @@ import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
 import Drivers from "../../pages/Drivers";
 import Bus from "../../pages/Bus";
-
+import TripBusAddress from "../../pages/TripBusAddress";
 import LineBuses from "../../pages/LineBuses";
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -50,9 +50,10 @@ import LineBusDetail from "../../pages/LineBuses/LineBusDetail";
 import NewLineBus from "../../pages/LineBuses/NewLineBus";
 import Statistical from "../../pages/Statistical/Statistical";
 import StatisticalCustomerBook from "../../pages/StatisticalCustomerBook/StatisticalCustomerBook";
-import index from "../../pages/StatisticalRevenueBus/RevenueBus";
 import RevenueBus from "../../pages/StatisticalRevenueBus/RevenueBus";
 import RevenueBusDetail from "../../pages/StatisticalRevenueBus/RevenueBusDetail";
+import TripBusAddressDetail from "../../pages/TripBusAddress/TripBusAddressDetail";
+import NewTripBusAddress from "../../pages/TripBusAddress/NewTripBusAddress";
 
 function Layout(props) {
   var classes = useStyles();
@@ -114,6 +115,11 @@ function Layout(props) {
             <Route exact path="/app/statisticalBookBus" component={StatisticalCustomerBook} />
             <Route exact path="/app/revenueBus" component={RevenueBus} />
             <Route exact path="/app/revenueBus/:id" component={RevenueBusDetail} />
+
+            <Route exact path="/app/tripBusAddress" component={TripBusAddress} />
+            <Route exact path="/app/tripBusAddress/create" component={NewTripBusAddress} />
+            <Route exact path="/app/tripBusAddress/:id" component={TripBusAddressDetail} />
+
             <Route path="/app/ui/maps" component={Maps} />
             <Route path="/app/ui/icons" component={Icons} />
             <Route path="/app/ui/charts" component={Charts} />

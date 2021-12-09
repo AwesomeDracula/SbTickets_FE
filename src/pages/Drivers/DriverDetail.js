@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import * as AppURL from '../../services/urlAPI';
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import * as Utils from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -37,7 +38,7 @@ function DriverDetail() {
             codeLicense: body?.codeLicense,
             typeLicense: body?.typeLicense,
             address: body?.address,
-            dob: body?.dob,
+            dob: Utils.formatDateShow(body?.dob),
             seniority: body?.seniority,
             image: body?.image,
           };
@@ -55,7 +56,7 @@ function DriverDetail() {
         ...formValues,
         seniority: parseInt(formValues.seniority),
         salaryId: 1,
-        dob: '2000-01-01',
+        dob: Utils.formatDateShow(formValues.dob),
         image: imageDrvier
       }).then(res => {
         toast.success(res?.msg);
@@ -68,7 +69,6 @@ function DriverDetail() {
   }
 
   const handleInputChange = (e) => {
-    // console.log(e.target.files[0].name);
     if(e.target.name === 'image'){
       setImageDriver("../" + e.target.files[0].name);
     }
@@ -113,7 +113,6 @@ function DriverDetail() {
                             variant="outlined"
                             id="image" 
                             width="200" height="120" />
-                        {/* <input type="file"  onChange={handleInputChange} disabled={!isEditing} name="image"/> */}
                       </div>
                     <TextField
                       id="nationalId"
@@ -152,18 +151,6 @@ function DriverDetail() {
                       variant="outlined"
                       disabled={!isEditing}
                     />
-                    {/* <TextField
-                      id="typeLicense"
-                      name="typeLicense"
-                      label="Type License"
-                      type="text"
-                      className={classes.input}
-                      value={formValues.typeLicense}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                      disabled={!isEditing}
-                    /> */}
                     
                   </Grid>
                   <Grid item xs={6}>
@@ -195,7 +182,7 @@ function DriverDetail() {
                       id="dob"
                       label="Date of Birth"
                       type="date"
-                      // value={formValues?.dob}
+                      value={Utils.formatDateShow(formValues?.dob)}
                       onChange={handleInputChange}
                       sx={{ width: 220 }}
                       InputLabelProps={{

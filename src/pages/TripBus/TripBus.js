@@ -7,6 +7,8 @@ import instance from '../../services';
 import * as AppURL from '../../services/urlAPI';
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -35,16 +37,16 @@ function TripBusNew() {
   const [listLineBus, setListLineBus] = useState([]);
   const [listDriver, setlistDriver] = useState([]);
 
+  const [selectedDate, handleDateChange] = useState(new Date());
+
   useEffect(() => {
     let url = AppURL.getAllBuses;
     instance.get(url)
       .then(res => {
-        //console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           setListTripBus(body);
         }
-
       })
   }, []);
 
@@ -56,39 +58,14 @@ function TripBusNew() {
         if (res?.status === 200) {
           const body = res?.body;
           setlistDriver(body);
-          console.log("driver: " + JSON.stringify(body));
-          console.log(selectedDriver);
-          console.log(selectedassitDriver);
         }
-
       })
   }, []);
-
-  // useEffect(() => {
-  //   if(listAllDriver.length > 0){
-  //     let listDriverNew = listAllDriver.filter(e => {
-  //       return e.id != selectedDriver
-  //     })
-  //     console.log("listDriverNew" + listDriverNew);
-  //     setListTripBusAssistant(listDriverNew);
-  //   }
-  // }, [selectedDriver]);
-
-  // useEffect(() => {
-  //   if(listAllDriver.length > 0){
-  //     let listDriverNew = listAllDriver.filter(e => {
-  //       return e.id != selectedassitDriver
-  //     })
-  //     console.log("listDriverNewAAÂ" + listDriverNew);
-  //     setlistDriver(listDriverNew);
-  //   }
-  // }, [selectedassitDriver]);
   
   useEffect(() => {
     let url = AppURL.getAllLineBus;
     instance.get(url)
       .then(res => {
-        ////console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           setListLineBus(body);
@@ -102,6 +79,7 @@ function TripBusNew() {
       ...formValues,
       driverId: selectedDriver,
       assistantBusId: selectedassitDriver,
+      timeTrip: selectedDate
     })
       .then(res => {
         toast.success(res?.msg);
@@ -317,18 +295,16 @@ function TripBusNew() {
                       variant="outlined"
                       //disabled={!isEditing}
                     />
-                    <TextField
-                      id="timeTrip"
-                      name="timeTrip"
-                      label="timeTrip"
-                      type="text"
-                      className={classes.input}
-                      value={formValues.timeTrip}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                      //disabled={!isEditing}
-                    />
+                    
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <DateTimePicker
+                        label="Time trip"
+                        inputVariant="outlined"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        className={classes.input}
+                      />
+                    </MuiPickersUtilsProvider>
                   </Grid>
                 </Grid>
               </Widget>

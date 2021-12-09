@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Table,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  Chip,
   Grid,
   FormControl,
   InputLabel,
@@ -41,8 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Statistical() {
-  //var keys = Object.keys(data[0]).map(i => i.toUpperCase());
-  //keys.shift(); // delete "id" key
   const classes = useStyles();
   const [listDriver, setlistDriver] = useState([]);
   const [listData, setlistData] = useState([]);
@@ -54,24 +46,12 @@ export default function Statistical() {
     let url = AppURL.getAllDrivers;
     instance.get(url)
       .then(res => {
-        //console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           setlistDriver(body);
         }
       })
   }, []);
-
-  const data = {
-    driverName: "",
-    tripBusId: "",
-    scrapDateTime: "",
-    roleCar: "",
-    wages:"",
-    fixedSalary: "",
-  };
-
-  
   
   const searchData = () => {
       if(timePicker === "" || selecteDriver === ""){
@@ -172,29 +152,11 @@ export default function Statistical() {
                             helperText="Start from year selection"
                             value={timePicker}
                             onChange={(e) => {
-                              //console.log(e.target.value);
-                              settimePicker(e.getFullYear() + "-" +e.getMonth());
+                              settimePicker(e.getFullYear() + "-" +(e.getMonth() + 1));
                             }}
                           />
                       </Grid>
                     </MuiPickersUtilsProvider>
-                  {/* <TextField
-                      id="dob"
-                      //label="Date of Birth"
-                      type="date"
-                      //value={new Date(new Date(formValues?.dob).getTime() - new Date(formValues?.dob).getTimezoneOffset() * 60 * 1000)}
-                      sx={{ width: 220 }}
-                      
-                      //type="variant"
-                      variant="filled"
-                      className={classes.input}
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                        settimePicker(e.target.value)
-                      }}
-                      variant="outlined"
-                    /> */}
-
                   <Button
                     variant="contained"
                     size="medium"

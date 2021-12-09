@@ -7,6 +7,7 @@ import instance from '../../services';
 import * as AppURL from '../../services/urlAPI';
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import * as Utils from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -38,7 +39,7 @@ function NewBus() {
             carNumber: parseInt(formValues.carNumber),
             numberSeats: parseInt(formValues.numberSeats),
             yearUse: parseInt(formValues.yearUse),
-            dateMantain: '2022-01-01'
+            dateMantain: Utils.formatDateShow(formValues.dateMantain)
         })
             .then(res => {
                 toast.success(res?.msg);
@@ -158,6 +159,7 @@ function NewBus() {
                                             type="date"
                                             sx={{ width: 220 }}
                                             onChange={handleInputChange}
+                                            value={Utils.formatDateShow(formValues.dateMantain)}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}

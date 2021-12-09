@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Grid, TextField, CircularProgress, Button as MUIButton, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import Widget from "../../components/Widget/Widget";
 import PageTitle from "../../components/PageTitle/PageTitle";
-import { Typography, Button } from "../../components/Wrappers/Wrappers";
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import instance from '../../services';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import * as AppURL from '../../services/urlAPI';
-import { useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -18,14 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TripBusDetail({prop}) {
+function TripBusDetail({ prop }) {
   let history = useHistory();
   let location = useLocation();
-  //console.log(location.state);
   const classes = useStyles();
   const { id } = useParams();
-  const { driverId } = useParams();
-  const { assitanceId } = useParams();
   const [formValues, setFormValues] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [listTripBus, setListTripBus] = useState([]);
@@ -34,12 +31,13 @@ function TripBusDetail({prop}) {
 
   const [selectedDriver, setselectedDriver] = useState(location.state?.driverId);
   const [selectedassitDriver, setselectedassitDriver] = useState(location.state?.assitanceId);
+
+  const [selectedDate, handleDateChange] = useState(new Date());
+
   useEffect(() => {
     let url = AppURL.findTripBus + '/' + id;
-    //console.log(url);
     instance.get(url)
       .then(res => {
-        //console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           let data = {
@@ -51,8 +49,8 @@ function TripBusDetail({prop}) {
             priceTrip: body?.priceTrip,
             timeTrip: body?.timeTrip,
           };
-          //console.log(data);
           setFormValues(data);
+          handleDateChange(new Date(body.timeTrip));
         }
       })
   }, []);
@@ -61,7 +59,6 @@ function TripBusDetail({prop}) {
     let url = AppURL.getAllBuses;
     instance.get(url)
       .then(res => {
-        //console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           setListTripBus(body);
@@ -74,43 +71,18 @@ function TripBusDetail({prop}) {
     let url = AppURL.getAllDrivers;
     instance.get(url)
       .then(res => {
-        //console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           setlistDriver(body);
-          console.log("driver: " + JSON.stringify(body));
-          console.log(selectedDriver);
-          console.log(selectedassitDriver);
         }
 
       })
   }, []);
 
-  // useEffect(() => {
-  //   if(listAllDriver.length > 0){
-  //     let listDriverNew = listAllDriver.filter(e => {
-  //       return e.id != selectedDriver
-  //     })
-  //     console.log("listDriverNew" + listDriverNew);
-  //     setListTripBusAssistant(listDriverNew);
-  //   }
-  // }, [selectedDriver]);
-
-  // useEffect(() => {
-  //   if(listAllDriver.length > 0){
-  //     let listDriverNew = listAllDriver.filter(e => {
-  //       return e.id != selectedassitDriver
-  //     })
-  //     console.log("listDriverNewAAÂ" + listDriverNew);
-  //     setlistDriver(listDriverNew);
-  //   }
-  // }, [selectedassitDriver]);
-  
   useEffect(() => {
     let url = AppURL.getAllLineBus;
     instance.get(url)
       .then(res => {
-        ////console.log(res);
         if (res?.status === 200) {
           const body = res?.body;
           setListLineBus(body);
@@ -126,6 +98,7 @@ function TripBusDetail({prop}) {
         ...formValues,
         driverId: selectedDriver,
         assistantBusId: selectedassitDriver,
+        timeTrip: selectedDate
       }).then(res => {
         toast.success(res?.msg);
         history.goBack();
@@ -138,7 +111,6 @@ function TripBusDetail({prop}) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    //console.log(e.target);
     setFormValues({
       ...formValues,
       [name]: value,
@@ -174,162 +146,137 @@ function TripBusDetail({prop}) {
               <Widget disableWidgetMenu>
                 <Grid container item xs={12}>
                   <Grid item xs={6}>
-                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
-                    <InputLabel id="demo-simple-select-label">List Bus</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={formValues.busId}
-                      label="Bus"
-                      onChange={handleInputChange}
-                      name="busId"
-                      MenuProps={{
-                        anchorOrigin: {
-                          vertical: "bottom",
-                          horizontal: "left"
-                        },
-                        transformOrigin: {
-                          vertical: "top",
-                          horizontal: "left"
-                        },
-                        getContentAnchorEl: null
-                      }}
+                    <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`, width: `80%` }}>
+                      <InputLabel id="demo-simple-select-label">List Bus</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={formValues.busId}
+                        label="Bus"
+                        onChange={handleInputChange}
+                        name="busId"
+                        MenuProps={{
+                          anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                          },
+                          transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                          },
+                          getContentAnchorEl: null
+                        }}
 
-                      disabled={!isEditing}
-                    >
-                      {
+                        disabled={!isEditing}
+                      >
+                        {
                           listTripBus.length > 0 && listTripBus.map((e) => (
                             <MenuItem value={e.id}>{e.carNumber} {e.color} {e.manufacturer} </MenuItem>
                           ))
-                      }
+                        }
+                      </Select>
+                    </FormControl>
 
-                      {/* <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                  </FormControl>
+                    <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`, width: `80%` }}>
+                      <InputLabel id="demo-simple-select-label">List LineBus</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="LineBus"
+                        name="lineBusId"
+                        value={formValues.lineBusId}
+                        onChange={handleInputChange}
+                        MenuProps={{
+                          anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                          },
+                          transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                          },
+                          getContentAnchorEl: null
+                        }}
 
-                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
-                    <InputLabel id="demo-simple-select-label">List LineBus</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="LineBus"
-                      name="lineBusId"
-                      value={formValues.lineBusId}
-                      onChange={handleInputChange}
-                      MenuProps={{
-                        anchorOrigin: {
-                          vertical: "bottom",
-                          horizontal: "left"
-                        },
-                        transformOrigin: {
-                          vertical: "top",
-                          horizontal: "left"
-                        },
-                        getContentAnchorEl: null
-                      }}
-
-                      disabled={!isEditing}
-                    >
-                      {
+                        disabled={!isEditing}
+                      >
+                        {
                           listLineBus.length > 0 && listLineBus.map((e) => (
                             <MenuItem value={e.id}>{e.firstPoint.address} {e.lastPoint.address}</MenuItem>
                           ))
-                      }
-                      {/* <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                  </FormControl>
+                        }
+                      </Select>
+                    </FormControl>
 
-                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
-                    <InputLabel id="demo-simple-select-label">List Driver</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="LineBus"
-                      name="driverId"
-                      value={selectedDriver}
-                      onChange={(e) => setselectedDriver(e.target.value)}
-                      MenuProps={{
-                        anchorOrigin: {
-                          vertical: "bottom",
-                          horizontal: "left"
-                        },
-                        transformOrigin: {
-                          vertical: "top",
-                          horizontal: "left"
-                        },
-                        getContentAnchorEl: null
-                      }}
+                    <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`, width: `80%` }}>
+                      <InputLabel id="demo-simple-select-label">List Driver</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="LineBus"
+                        name="driverId"
+                        value={selectedDriver}
+                        onChange={(e) => setselectedDriver(e.target.value)}
+                        MenuProps={{
+                          anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                          },
+                          transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                          },
+                          getContentAnchorEl: null
+                        }}
 
-                      disabled={!isEditing}
-                    >
-                      {
+                        disabled={!isEditing}
+                      >
+                        {
                           listDriver.length > 0 && listDriver.map((e) => {
-                            if(selectedassitDriver === e.id) return;
+                            if (selectedassitDriver === e.id) return;
                             return <MenuItem value={e.id}>{e.name}</MenuItem>
                           })
-                      }
-                      {/* <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                  </FormControl>
+                        }
+                      </Select>
+                    </FormControl>
 
-                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
-                    <InputLabel id="demo-simple-select-label">List Assistant</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="LineBus"
-                      name="driverId"
-                      value={selectedassitDriver}
-                      onChange={(e) => setselectedassitDriver(e.target.value)}
-                      MenuProps={{
-                        anchorOrigin: {
-                          vertical: "bottom",
-                          horizontal: "left"
-                        },
-                        transformOrigin: {
-                          vertical: "top",
-                          horizontal: "left"
-                        },
-                        getContentAnchorEl: null
-                      }}
+                    <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`, width: `80%` }}>
+                      <InputLabel id="demo-simple-select-label">List Assistant</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="LineBus"
+                        name="driverId"
+                        value={selectedassitDriver}
+                        onChange={(e) => setselectedassitDriver(e.target.value)}
+                        MenuProps={{
+                          anchorOrigin: {
+                            vertical: "bottom",
+                            horizontal: "left"
+                          },
+                          transformOrigin: {
+                            vertical: "top",
+                            horizontal: "left"
+                          },
+                          getContentAnchorEl: null
+                        }}
 
-                      disabled={!isEditing}
-                    >
-                      {
+                        disabled={!isEditing}
+                      >
+                        {
                           listDriver.length > 0 && listDriver.map((e) => {
-                            if(selectedDriver === e.id) return;
+                            if (selectedDriver === e.id) return;
                             return <MenuItem value={e.id}>{e.name}</MenuItem>
                           }
                           )
-                      }
-                      {/* <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                  </FormControl>
-                  
-                   
+                        }
+                      </Select>
+                    </FormControl>
+
+
                   </Grid>
                   <Grid item xs={6}>
-                    
-                  {/* <TextField
-                      id="carNumber"
-                      name="carNumber"
-                      label="CarNumber"
-                      type="text"
-                      className={classes.input}
-                      value={formValues?.carNumber}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                      disabled={!isEditing}
-                    /> */}
+
                     <TextField
                       id="numberGuest"
                       name="numberGuest"
@@ -354,18 +301,16 @@ function TripBusDetail({prop}) {
                       variant="outlined"
                       disabled={!isEditing}
                     />
-                    <TextField
-                      id="timeTrip"
-                      name="timeTrip"
-                      label="timeTrip"
-                      type="text"
-                      className={classes.input}
-                      value={formValues.timeTrip}
-                      onChange={handleInputChange}
-                      type="variant"
-                      variant="outlined"
-                      disabled={!isEditing}
-                    />
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <DateTimePicker
+                        label="Time trip"
+                        inputVariant="outlined"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        className={classes.input}
+                        disabled={!isEditing}
+                      />
+                    </MuiPickersUtilsProvider>
                   </Grid>
                 </Grid>
               </Widget>
