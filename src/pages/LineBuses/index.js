@@ -71,7 +71,7 @@ export default function Tables() {
             datatableData ? <MUIDataTable
               title="LineBus List"
               data={datatableData}
-              columns={["Id", "First Point", "Last Point", "Length", "Complexity"]}
+              columns={["Code", "First Point", "Last Point", "Length", "Complexity"]}
               options={{
                 filterType: "checkbox",
                 draggableColumns: true,

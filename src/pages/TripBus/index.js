@@ -81,7 +81,69 @@ export default function TripBus() {
             datatableData ? <MUIDataTable
               title="TripBus List"
               data={datatableData}
-              columns={[ "Id" ,"","",  "CarNumber", "color", "FirstPoint", "LastPoint","NumberGuest", "PriceTrip", "TimeTrip"]}
+              // columns={[ "TripBus Code" ,,"Assistance Code",  "CarNumber", "Color", "First Point", "Last Point","Number of Guest", "Trip Price", "Trip Time"]}
+              columns = {[
+                {
+                 name: "TripBus Code",
+                 options: {
+                  display: true
+                 }
+                },
+                {
+                  name: "Driver Code",
+                  options: {
+                   display: false
+                  }
+                 },
+                {
+                  name: "Assistance Code",
+                  options: {
+                   display: false
+                  }
+                 },
+                 {
+                  name: "CarNumber",
+                  options: {
+                   display: true
+                  }
+                 },
+                 {
+                  name: "Color",
+                  options: {
+                   display: true
+                  }
+                 },
+                 {
+                  name: "First Point",
+                  options: {
+                   display: true
+                  }
+                 },
+                 {
+                  name: "Last Point",
+                  options: {
+                   display: true
+                  }
+                 },
+                 {
+                  name: "Number of Guest",
+                  options: {
+                   display: true
+                  }
+                 },
+                 {
+                  name: "Trip Price",
+                  options: {
+                   display: true
+                  }
+                 },
+                 {
+                  name: "Trip Time",
+                  options: {
+                   display: true
+                  }
+                 }
+               ]}
               options={{
                 filterType: "checkbox",
                 draggableColumns: true,

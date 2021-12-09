@@ -49,7 +49,7 @@ export default function RevenueBus() {
 
             const data = res?.body.map(item => {
                 let labelitem = [];
-                labelitem.push(item?.busId, item?.carNumber, item?.tripBusId, item?.numberGuest, item?.priceTrip, item?.timeTrip, item?.revenue);
+                labelitem.push(item?.busId, item?.carNumber,  item?.revenue);
                 return labelitem;
             })
             setlistData(data);
@@ -74,7 +74,7 @@ return (
                                 listData ? <MUIDataTable
                                     title="Revenue Bus List"
                                     data={listData}
-                                    columns={["busId", "carNumber", "TripBusId", "numberGuest", "priceTrip", "timeTrip", "revenue"]}
+                                    columns={["Bus Code", "Car Number","Revenue"]}
                                     options={{
                                         filterType: "checkbox",
                                         draggableColumns: true,

@@ -287,7 +287,7 @@ function TripBusDetail({ prop }) {
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
-                      disabled={!isEditing}
+                      disabled={true}
                     />
                     <TextField
                       id="priceTrip"
