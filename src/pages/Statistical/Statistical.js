@@ -164,7 +164,7 @@ export default function Statistical() {
                     onClick={searchData}
                     style={{ marginTop: `30px`,width: `80%`}}
                   >
-                     Statistical
+                     View
                     </Button>
                 
                   </Grid>

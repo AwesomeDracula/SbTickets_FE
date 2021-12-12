@@ -75,6 +75,7 @@ function DriverDetail() {
     const { name, value }  = e.target;
     setFormValues({
       ...formValues,
+      image: "../Duong-Tuan-Anh1.jpg",
       [name]: value,
     });
   };

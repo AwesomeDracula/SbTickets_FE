@@ -292,7 +292,7 @@ function TripBusDetail({ prop }) {
                     <TextField
                       id="priceTrip"
                       name="priceTrip"
-                      label="priceTrip"
+                      label="Trip Price"
                       type="text"
                       className={classes.input}
                       value={formValues.priceTrip}

@@ -70,6 +70,10 @@ function NewLineBus() {
     });
   };
 
+  console.log("firstId " + firstId);
+  console.log("lastId" + lastId);
+  console.log("listLocation" + listLocation);
+
   return (
     <>
       {
@@ -122,7 +126,7 @@ function NewLineBus() {
                       {
                           listLocation.length > 0 && listLocation.map((e) => {
                             if(lastId === e.id) return;
-                            return <MenuItem value={e.id}>{e.name}</MenuItem>
+                            return <MenuItem value={e.id}>{e.address}</MenuItem>
                           })
                       }
                       {/* <MenuItem value={10}>Ten</MenuItem>
@@ -156,7 +160,7 @@ function NewLineBus() {
                       {
                           listLocation.length > 0 && listLocation.map((e) => {
                             if(firstId === e.id) return;
-                            return <MenuItem value={e.id}>{e.name}</MenuItem>
+                            return <MenuItem value={e.id}>{e.address}</MenuItem>
                           }
                           )
                       }

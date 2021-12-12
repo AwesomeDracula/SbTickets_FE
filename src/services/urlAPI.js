@@ -15,7 +15,7 @@ export const getAllTripBus = 'admin/getAllTripBus';
 export const findTripBus = 'admin/findTripBus';
 export const editTripBus = 'admin/editTripBus';
 export const createTripBus = 'admin/createTripBus';
-
+export const deleteTripBus = 'admin/deleteTripBus';
 // linebus
 export const getAllLineBus = 'admin/getLineBus';
 export const getLineBus = 'admin/getLineBus';

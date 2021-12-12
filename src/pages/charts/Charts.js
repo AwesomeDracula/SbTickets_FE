@@ -116,17 +116,11 @@ export default function Charts(props) {
       } />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <Widget title="Apex Line Chart" upperTitle noBodyPadding>
-            <ApexLineChart />
-          </Widget>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Widget title="Apex Heatmap" upperTitle noBodyPadding>
-            <ApexHeatmap />
-          </Widget>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Widget title=" Line Chart" noBodyPadding upperTitle>
+          <Widget title="Chart TripBus for Month" noBodyPadding upperTitle>
             <ResponsiveContainer width="100%" height={350}>
               <LineChart
                 width={500}
@@ -159,24 +153,16 @@ export default function Charts(props) {
             </ResponsiveContainer>
           </Widget>
         </Grid>
-        {/* <Grid item xs={12} md={4}>
-          <Widget title="Pie Chart with Tooltips" noBodyPadding upperTitle>
+        <Grid item xs={12} md={4}>
+          <Widget title="System management">
             <ResponsiveContainer width="100%" height={300}>
-              <PieChart width={200} height={300}>
-                <Pie
-                  activeIndex={activeIndex}
-                  activeShape={renderActiveShape}
-                  data={pieChartData}
-                  innerRadius={60}
-                  outerRadius={80}
-                  fill={theme.palette.primary.main}
-                  dataKey="value"
-                  onMouseEnter={(e, id) => setActiveIndexId(id)}
-                />
-              </PieChart>
+              <img src={"../sm-tickets-logo.jpg"}
+                                        variant="outlined"
+                                        id="image" 
+                                        width="500" height="420" />
             </ResponsiveContainer>
           </Widget>
-        </Grid> */}
+        </Grid>
       </Grid>
     </>
   );

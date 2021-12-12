@@ -162,39 +162,7 @@ function TripBusNew() {
                     </Select>
                   </FormControl>
 
-                  <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
-                    <InputLabel id="demo-simple-select-label">List LineBus</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      label="LineBus"
-                      name="lineBusId"
-                      value={formValues.lineBusId}
-                      onChange={handleInputChange}
-                      MenuProps={{
-                        anchorOrigin: {
-                          vertical: "bottom",
-                          horizontal: "left"
-                        },
-                        transformOrigin: {
-                          vertical: "top",
-                          horizontal: "left"
-                        },
-                        getContentAnchorEl: null
-                      }}
-
-                      //disabled={!isEditing}
-                    >
-                      {
-                          listLineBus.length > 0 && listLineBus.map((e) => (
-                            <MenuItem value={e.id}>{e.firstPoint.address} {e.lastPoint.address}</MenuItem>
-                          ))
-                      }
-                      {/* <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                  </FormControl>
+                  
 
                   <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
                     <InputLabel id="demo-simple-select-label">List Driver</InputLabel>
@@ -271,7 +239,7 @@ function TripBusNew() {
                   </Grid>
                   <Grid item xs={6}>
                     
-                    <TextField
+                    {/* <TextField
                       id="numberGuest"
                       name="numberGuest"
                       label="numberGuest"
@@ -281,12 +249,46 @@ function TripBusNew() {
                       onChange={handleInputChange}
                       type="variant"
                       variant="outlined"
+                      disabled={true}
+                    /> */}
+                    <FormControl className="MuiTextField-root makeStyles-input-79" style={{ marginBottom: `30px`,width: `80%`}}>
+                    <InputLabel id="demo-simple-select-label">List LineBus</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="LineBus"
+                      name="lineBusId"
+                      value={formValues.lineBusId}
+                      onChange={handleInputChange}
+                      MenuProps={{
+                        anchorOrigin: {
+                          vertical: "bottom",
+                          horizontal: "left"
+                        },
+                        transformOrigin: {
+                          vertical: "top",
+                          horizontal: "left"
+                        },
+                        getContentAnchorEl: null
+                      }}
+
                       //disabled={!isEditing}
-                    />
+                    >
+                      {
+                          listLineBus.length > 0 && listLineBus.map((e) => (
+                            <MenuItem value={e.id}>{e.firstPoint.address} {e.lastPoint.address}</MenuItem>
+                          ))
+                      }
+                      {/* <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem> */}
+                    </Select>
+                  </FormControl>
+
                     <TextField
                       id="priceTrip"
                       name="priceTrip"
-                      label="priceTrip"
+                      label="Trip Price"
                       type="text"
                       className={classes.input}
                       value={formValues.priceTrip}

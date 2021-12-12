@@ -24,7 +24,7 @@ const data = {
   address: "",
   dob: "2000-01-01",
   seniority: 0,
-  image: "body?.image",
+  image: "../Duong-Tuan-Anh1.jpg",
 };
 
 function NewDriver() {
@@ -51,6 +51,7 @@ function NewDriver() {
     console.log("name" + e.target.name + " " + e.target.value)
     setFormValues({
       ...formValues,
+      image: "../Duong-Tuan-Anh1.jpg",
       [name]: value,
     });
   };

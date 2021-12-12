@@ -51,7 +51,7 @@ export default function TripBus() {
       if (rowsSelectedByUser.includes(idx))
         rowsToDelete.push(data[0]);
     })
-    instance.post(AppURL.deleteBus, rowsToDelete)
+    instance.post(AppURL.deleteTripBus, rowsToDelete)
       .then(res => {
         toast.success(res?.msg);
       }).catch(error => {

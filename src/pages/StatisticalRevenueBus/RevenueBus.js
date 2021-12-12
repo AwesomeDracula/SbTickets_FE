@@ -55,7 +55,7 @@ export default function RevenueBus() {
             setlistData(data);
         })
         .catch(error => {
-            toast.error("Fuck Thattt");
+            toast.error("Error Found RevenueBus");
         })
 
 console.log("listData: " + JSON.stringify(listData));

@@ -2,7 +2,7 @@ import Axios from "axios";
 import { baseUrl } from "./urlAPI";
 const instance = Axios.create({
   baseURL: baseUrl,
-  timeout: 10000,
+  // timeout: 100000,
   headers: { "Content-Type": "application/json" },
 });
 

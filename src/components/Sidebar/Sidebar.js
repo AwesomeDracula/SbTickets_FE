@@ -34,41 +34,36 @@ import {
 } from "../../context/LayoutContext";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  // { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  // {
+  //   id: 1,
+  //   label: "Typography",
+  //   link: "/app/typography",
+  //   icon: <TypographyIcon />,
+  // },
+  // { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
+  // {
+  //   id: 3,
+  //   label: "Notifications",
+  //   link: "/app/notifications",
+  //   icon: <NotificationsIcon />,
+  // },
   {
-    id: 1,
-    label: "Typography",
-    link: "/app/typography",
-    icon: <TypographyIcon />,
+    id: 0,
+    label: "Dashboard",
+    link: "/app/ui/charts",
+    icon: <HomeIcon />
   },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-  },
-  {
-    id: 4,
-    label: "UI Elements",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Icons", link: "/app/ui/icons" },
-      { label: "Charts", link: "/app/ui/charts" },
-      { label: "Maps", link: "/app/ui/maps" },
-    ],
-  },
-  { id: 5, type: "divider" },
-  { id: 6, label: "Drivers", link: "/app/drivers", icon: <BusEtaIcon/> },
-  { id: 7, label: "Bus", link: "/app/buses", icon: <DriveEtaIcon /> },
-  { id: 8, label: "TripBus", link: "/app/tripbus", icon: <TripOriginIcon/> },
-  { id: 9, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
-  { id: 10, label: "Trip Bus Address", link: "/app/tripBusAddress", icon: <BusEtaIcon/> },
-  { id: 11, type: "divider" },
-  { id: 12, label: "Statistical Wages", link: "/app/statistical", icon: <TypographyIcon /> },
-  { id: 13, label: "CustomerBookedBus", link: "/app/statisticalBookBus", icon: <AirplayIcon /> },
-  { id: 14, label: "Revenue Bus", link: "/app/revenueBus", icon: <TypographyIcon /> },  
+  { id: 1, type: "divider" },
+  { id: 2, label: "Drivers", link: "/app/drivers", icon: <BusEtaIcon/> },
+  { id: 3, label: "Bus", link: "/app/buses", icon: <DriveEtaIcon /> },
+  { id: 4, label: "TripBus", link: "/app/tripbus", icon: <TripOriginIcon/> },
+  { id: 5, label: "Line Buses", link: "/app/lineBuses", icon: <DriveEtaIcon /> },
+  { id: 6, label: "Trip Bus Address", link: "/app/tripBusAddress", icon: <BusEtaIcon/> },
+  { id: 7, type: "divider" },
+  { id: 8, label: "Statistical Wages", link: "/app/statistical", icon: <TypographyIcon /> },
+  { id: 9, label: "CustomerBookedBus", link: "/app/statisticalBookBus", icon: <AirplayIcon /> },
+  { id: 10, label: "Revenue Bus", link: "/app/revenueBus", icon: <TypographyIcon /> },  
 ];
 
 function Sidebar({ location }) {

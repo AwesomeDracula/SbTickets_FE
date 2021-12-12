@@ -85,6 +85,13 @@ function NewTripBusAddress() {
                                             variant="outlined"
                                         />
                                     </Grid>
+                                    <Grid item xs={6}>
+                                                <img src={"../sm-tickets-logo.jpg"}
+                                        variant="outlined"
+                                        id="image" 
+                                        width="500" height="420" />
+                                    </Grid>
+                                    
                                 </Grid>
                             </Widget>
                         </Grid>
